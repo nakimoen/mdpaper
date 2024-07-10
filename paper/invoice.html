@@ -58,7 +58,7 @@
             <input type="text" id="site-input" />
           </div>
           <div>
-            <label for="overtime-input">残業時間（１時間単位）</label>
+            <label for="overtime-input">残業時間</label>
             <input
               type="number"
               name="overtime-input"
@@ -66,10 +66,12 @@
               min="0"
               step="0.25"
               value="0"
-            />
+            />h
           </div>
           <div id="way-wrapper">
             <label for="way-radio">移動手段</label>
+            <br />
+
             <label for="way-train">
               <input
                 type="radio"
@@ -213,8 +215,8 @@
                   <input type="text" name="from-input" id="from-input" />
                 </label>
                 <br />
-                <label for="to-input"
-                  >到着地(または経由地)
+                <label for="to-input">
+                  到着地
                   <input type="text" name="to-input" id="to-input" />
                 </label>
               </div>
@@ -239,6 +241,7 @@
                 その他
                 <input type="text" name="others-input" id="others-input" />
               </label>
+              <br />
               <label for="others-fee">
                 料金
                 <input

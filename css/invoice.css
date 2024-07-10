@@ -34,6 +34,11 @@ div#input-container > div {
   width: 50%;
   min-height: 100px;
 }
+
+#input-container > div input[type='text'],
+#input-container > div input[type='number'] {
+  max-width: 70%;
+}
 /**===========================**/
 
 div#row_1 {
