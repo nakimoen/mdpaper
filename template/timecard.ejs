@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>就業時間確認表（タイムカード）</title>
+    <link rel="stylesheet" href="../css/paper-common.css" />
+    <link rel="stylesheet" href="../css/a5.css" />
+    <link rel="stylesheet" href="../css/timecard.css" />
+  </head>
+  <body>
+    <div class="no-print">
+      <ul>
+        <li>
+          <a href="./invoice.html">交通費請求書・勤務確認表</a>
+        </li>
+        <li>
+          <a href="./timecard.html">就業時間確認表（タイムカード）</a>
+        </li>
+      </ul>
+      <label for="start-date-input">開始日</label>
+      <input type="date" name="start-date" id="start-date-input" />
+    </div>
+    <article>
+      <section class="sheet">
+        <div id="row_1">就業時間確認表（タイムカード）　　　日勤</div>
+        <table id="detail-table">
+          <%# 8+12*4 = 56 cols %>
+          <thead>
+            <tr>
+              <td colspan="32">　</td>
+              <td colspan="8">報告者</td>
+              <td colspan="16"><b id="name-text"></b></td>
+            </tr>
+            <tr>
+              <td class="border-left-double border-right-solid">曜日</td>
+              <td class="border-right-solid">日付</td>
+              <td class="border-right-solid">業者名・現場</td>
+              <td class="border-right-solid" colspan="2">勤務時間</td>
+              <td class="border-right-solid">実労働時間</td>
+              <td class="border-right-solid">休憩時間</td>
+              <td class="border-right-solid">残業</td>
+              <td colspan="48">実勤務時間</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<7;i++){%> <%-
+            include('./timecard-row.ejs',{day:['金','土','日','月','火','水','木'][i]})%>
+            <%}%>
+          </tbody>
+          <tfoot>
+            <tr class="border-top-double">
+              <td
+                rowspan="2"
+                colspan="5"
+                class="border-left-double border-bottom-double"
+              ></td>
+              <td class="border-double sum-string">合計</td>
+              <td class="border-double sum-string">合計</td>
+              <td class="border-double sum-string">合計</td>
+              <td class="border-bottom-double" colspan="48" rowspan="2"></td>
+            </tr>
+            <tr class="">
+              <td
+                id="sum-work"
+                class="h-9 border-left-double border-bottom-double"
+              ></td>
+              <td id="sum-rest" class="h-9 border-double"></td>
+              <td id="sum-overtime" class="h-9 border-double"></td>
+              <!-- <td class="" colspan="48"></td> -->
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+    </article>
+
+    <script src="../js/util.js"></script>
+    <script src="../js/timecard.js"></script>
+  </body>
+</html>

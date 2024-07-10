@@ -1,0 +1,346 @@
+@media screen {
+  .active {
+    background-color: rgba(116, 238, 137, 0.291);
+  }
+}
+
+.font-big {
+  font-size: 12pt !important;
+}
+.remove-detail-button {
+  border: 1px pink solid;
+  border-radius: 100%;
+  background-color: pink;
+  color: red;
+}
+.template-button {
+  color: gray;
+  border-radius: 20px;
+  border-color: rgba(127, 255, 212, 0.427);
+  background-color: rgba(127, 255, 212, 0.312);
+}
+.template-button:hover {
+  color: black;
+
+  border-color: rgba(127, 255, 212, 0.534);
+  background-color: rgba(127, 255, 212, 0.6);
+}
+
+div#input-container {
+  display: flex;
+}
+
+div#input-container > div {
+  width: 50%;
+  min-height: 100px;
+}
+/**===========================**/
+
+div#row_1 {
+  height: 5mm;
+  text-align: center;
+  /* font-weight: bold !important; */
+}
+/**===========================**/
+div#row_2 {
+  height: 12mm;
+  display: flex;
+}
+div#row_2 div.col_1 {
+  width: 175mm;
+  float: left;
+}
+div#row_2 div.col_2 {
+  float: right;
+  padding: 1px;
+}
+table#sign {
+  border: black 1px solid;
+  padding: 1mm;
+  height: 8mm;
+}
+table#sign tr {
+  padding: 2px;
+}
+
+table#sign tr td {
+  border: black 3px double;
+}
+
+table#sign td:nth-child(1) {
+  width: 20mm;
+}
+table#sign td:nth-child(2) {
+  width: 20mm;
+}
+table#sign td:nth-child(2) span:nth-child(2) {
+  border: 2px solid black;
+  border-radius: 60%;
+}
+table#sign td:nth-child(3) {
+  width: 50mm;
+}
+/**===========================**/
+div#row_3 {
+  height: 137mm;
+}
+div#row_3 > table {
+  height: 134mm;
+  width: 247mm;
+}
+div#row_3 > table td {
+  position: relative;
+}
+
+/**===========BORDER================**/
+
+div#row_3 > table thead tr {
+  border: 1px solid black;
+  border-top: 3px black double;
+  border-bottom: 3px black double;
+}
+div#row_3 > table thead td {
+  border: 2px solid black;
+}
+
+div#row_3 > table tfoot tr {
+  border: 1px solid black;
+  border-top: 3px black double;
+  border-bottom: 3px black double;
+}
+div#row_3 > table tfoot td {
+  border: 2px solid black;
+}
+
+div#row_3 > table tbody td {
+  border: 2px solid black;
+}
+
+div#row_3 table tr td:nth-child(3) td {
+  height: 8mm;
+}
+div#row_3 > table tr td:first-child {
+  border-left: 4px black double;
+}
+div#row_3 > table tr td:nth-child(2) {
+}
+div#row_3 > table tr td:nth-child(4) {
+}
+div#row_3 > table tr td:nth-of-type(n + 6):nth-of-type(-n + 9) {
+  border-right: 1px lightgray solid;
+}
+div#row_3 > table tr td:nth-of-type(n + 7):nth-of-type(-n + 10) {
+  border-left: 1px lightgray solid;
+}
+div#row_3 > table tr td:last-child {
+  border-right: 3px black double;
+}
+div#row_3 > table tbody tr:last-child {
+  border-bottom: 4px black double;
+}
+
+#row_3 thead td:last-child,
+#row_3 tfoot td:last-child {
+  border-right: 3px black double !important;
+}
+
+#row_3 thead td:last-child {
+  border-left: 2px solid black !important;
+}
+
+div#row_3 > table.normal-table td {
+  border: none !important;
+}
+
+/* 小計 */
+div#row_3 > table > tbody > tr > td:nth-child(11) {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+/* 残業 */
+div#row_3 > table :not(thead) tr td:nth-child(4) div {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+}
+div#row_3 > table :not(thead) tr td:nth-child(4) div::before {
+  content: 'H';
+}
+/* 出勤日数 */
+
+div#row_3 > table tfoot tr td:nth-child(2) div {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+}
+div#row_3 > table tfoot tr td:nth-child(2) div::before {
+  content: 'P';
+}
+
+div#row_3 > table > tr {
+  height: 16mm;
+}
+
+div#row_3 tfoot td:nth-child(even) span {
+  font-weight: bold !important;
+  font-size: 12pt;
+}
+
+/**==========列幅==============**/
+div#row_3 > table :not(tfoot) td:nth-child(1) {
+  width: 7mm;
+}
+div#row_3 > table :not(tfoot) td:nth-child(2) {
+  width: 10mm;
+}
+div#row_3 > table :not(tfoot) td:nth-child(3) {
+  width: 50mm;
+}
+div#row_3 > table :not(tfoot) td:nth-child(4) {
+  width: 13mm;
+}
+div#row_3 > table :not(tfoot) td:nth-child(5) {
+  width: 25mm;
+}
+div#row_3 > table :not(tfoot) td {
+  width: 22mm;
+}
+div#row_3 > table :not(tfoot) td:nth-child(11) {
+  width: 13mm;
+}
+
+div#row_3 > table tfoot td:nth-child(2) {
+  width: 27mm;
+}
+div#row_3 > table tfoot td:nth-child(3) {
+  width: 23mm;
+}
+.date-cell {
+  width: 9mm;
+  margin: auto !important;
+}
+.date-cell .month {
+  text-align: left;
+}
+.date-cell .day {
+  text-align: right;
+}
+div#row_3 > table tbody td:nth-child(2) {
+  width: 11mm;
+}
+
+.normal-table {
+  width: 100%;
+  height: 100%;
+}
+.normal-table tr {
+  border: none !important;
+}
+.normal-table td {
+  border: none !important;
+}
+.normal-table tr:first-child td {
+  border-bottom: solid 1px lightgray !important;
+}
+.normal-table tr:first-child {
+  border-top: none;
+}
+.normal-table tr:last-child {
+  border-bottom: none;
+}
+
+.path-table tr:nth-child(2) {
+  border-bottom: 1px solid black !important;
+}
+.path-table td {
+  height: 5mm;
+  border: 1px solid lightgray !important;
+}
+.path-table tr:first-child td {
+  border-top: none !important;
+}
+
+.path-table td:first-child {
+  border-left: none !important;
+}
+.path-table td:last-child {
+  border-right: none !important;
+}
+.path-table tr:last-child td {
+  border-bottom: none !important;
+}
+.path-select {
+  /* display: flex;
+  flex-direction: column; */
+}
+.path-select > div {
+  display: flex;
+  justify-content: center;
+}
+.path-table {
+}
+.path-table td {
+  border: 1px solid black;
+  width: 22mm !important;
+}
+/**** 移動手段 ****/
+
+.way-path {
+  position: relative;
+}
+.way-selected {
+  border: 1px solid black;
+  border-radius: 100%;
+}
+
+#path-detail-wrapper > div {
+  margin: 5px;
+  padding: 10px;
+  border: solid black 1px;
+  border-radius: 10px;
+}
+.path-detail-cell div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 112mm;
+  height: 17mm;
+  text-wrap: nowrap;
+  align-content: center;
+}
+.path-detail-cell div * {
+  position: relative;
+  height: auto;
+  z-index: 1;
+}
+.path-detail-cell div span {
+  font-size: inherit;
+}
+.path-detail-cell div span::before {
+  /* content: '×'; */
+}
+
+/**===========================**/
+div#row_4 {
+  height: 10mm;
+  margin-top: 3mm;
+}
+
+div#row_4 table tr td:first-child {
+  width: 20mm;
+}
+div#row_4 table tr td:not(:first-child) {
+  width: 16mm;
+  border: 1px black solid;
+}
+div#row_4 table tr td:nth-last-of-type(-n + 14) {
+  border-top: 3px black solid;
+  border-bottom: 3px black solid;
+}
+div#row_4 table tr td:nth-child(even) {
+  border-left: 3px black solid;
+}
+div#row_4 table tr td:last-child {
+  border-right: 3px black solid;
+}

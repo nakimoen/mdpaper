@@ -1,0 +1,70 @@
+<tr>
+  <td rowspan="4" class="border-left-double border-right-solid"><%=day%></td>
+  <td rowspan="4" class="border-right-solid date-cell"></td>
+  <td
+    rowspan="2"
+    class="vendor-cell border-right-solid border-bottom-dotted"
+  ></td>
+  <td rowspan="2" class="border-right-solid border-bottom-dotted">開始</td>
+  <td
+    rowspan="2"
+    class="start-cell border-right-solid border-bottom-dotted"
+  ></td>
+  <td rowspan="4" class="work-cell hour-content border-right-solid">
+      <span></span>
+      <div></div>
+  </td>
+  <td rowspan="4" class="rest-cell hour-content border-right-solid">
+      <span></span>
+      <div></div>
+  </td>
+  <td rowspan="4" class="overtime-cell hour-content border-right-double">
+    <span></span>
+    <div>
+    </div>
+  </td>
+  <% for(let i=0; i<12; i++){%>
+
+  <td colspan="2" class="time-label bg-gray border-right-solid"><%= i%>:00</td>
+  <td colspan="2" class="time-label border-right-solid"><%= i%>:30</td>
+  <%}%>
+</tr>
+<tr>
+  <% for(let i=0; i<24; i++){%>
+
+  <td
+    class="time-cell border-right-dotted border-top-solid border-bottom-solid"
+    data-label="<%=(""+Math.floor(i/2)).padStart(2,0)%>:<%=(""+(i%2*30)).padStart(2,"0")%>"
+  ></td>
+  <td
+    class="time-cell border-right-strong border-top-solid border-bottom-solid"
+    data-label="<%=(""+Math.floor(i/2)).padStart(2,"0")%>:<%=(""+ (i%2*30+15)).padStart(2,"0")%>"
+  ></td>
+  <%}%>
+</tr>
+<tr>
+  <td rowspan="2" class="site-cell border-right-solid"></td>
+  <td rowspan="2" class="border-right-solid">終了</td>
+  <td rowspan="2" class="finish-cell border-right-solid"></td>
+  <% for(let i=0; i<12; i++){%>
+
+  <td colspan="2" class="time-label bg-gray border-right-solid">
+    <%=12+ i%>:00
+  </td>
+  <td colspan="2" class="time-label border-right-solid"><%=12+ i%>:30</td>
+  <%}%>
+</tr>
+<tr class="border-bottom-double">
+  <% for(let i=0; i<24; i++){%>
+
+  <td
+    class="time-cell border-right-dotted border-top-solid"
+    data-label="<%=(12+Math.floor(i/2)+"").padStart(2,0)%>:<%=((i%2*30)+"").padStart(2,"0")%>"
+
+  ></td>
+  <td
+    class="time-cell border-right-strong border-top-solid"
+    data-label="<%=(12+Math.floor(i/2)+"").padStart(2,0)%>:<%=(15+(i%2*30)+"").padStart(2,"0")%>"
+  ></td>
+  <%}%>
+</tr>

@@ -1,0 +1,55 @@
+/* 印刷時の用紙設定 */
+@page {
+  margin: 0; /* ヘッダー・フッダーを無効化 */
+}
+
+/* 要素の初期化 */
+.sheet *:not(small, b) {
+  /* マージン・パディングをリセットした方がデザインしやすい */
+  margin: 0;
+  padding: 0;
+  /* デフォルトのフォント */
+  color: black;
+  font-family: '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', YuGothic,
+    sans-serif;
+  font-size: 9.5pt;
+  font-weight: normal;
+}
+
+.sheet table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+/* ページレイアウト (section.sheet を１ページとする) */
+.sheet {
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+
+  /* 余白サイズ */
+  padding-top: 5mm;
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+
+/* プレビュー用のスタイル */
+@media screen {
+  body {
+    background: #e0e0e0;
+  }
+  .sheet {
+    background: white; /* 背景を白く */
+    box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3); /* ドロップシャドウ */
+    margin: 5mm auto;
+  }
+}
+/* 印刷用スタイル */
+@media print {
+  .no-print {
+    display: none;
+    height: 0;
+    overflow: hidden;
+  }
+}

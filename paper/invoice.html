@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通費請求書・勤務確認表</title>
+    <link rel="stylesheet" href="../css/paper-common.css" />
+    <link rel="stylesheet" href="../css/b5.css" />
+    <link rel="stylesheet" href="../css/util.css" />
+    <link rel="stylesheet" href="../css/invoice.css" />
+    <link rel="stylesheet" href="../css/invoice-work-content.css" />
+  </head>
+  <body>
+    <div class="no-print">
+      <ul>
+        <li>
+          <a href="./invoice.html">交通費請求書・勤務確認表</a>
+        </li>
+        <li>
+          <a href="./timecard.html">就業時間確認表（タイムカード）</a>
+        </li>
+      </ul>
+      <div>
+        <button onclick="reset()">リセット</button>
+        <button onclick="save()">保存</button>
+        <button onclick="output()">書き出し</button>
+        <button onclick="print()">印刷</button>
+      </div>
+      <hr />
+
+      <hr />
+      <label for="name-input">
+        請求者<input type="text" id="name-input" />
+        <button id="save-name-button" onclick="setName()">保存</button>
+      </label>
+      <hr />
+      <label for="date-input">
+        データを参照する週の初日（金曜日）
+        <input type="date" name="first-date" id="date-input" />
+      </label>
+      <div>
+        <label for="date-select">
+          入力する日付
+          <select name="date-select" id="date-select"></select>
+        </label>
+      </div>
+      <hr />
+
+      <div id="input-container" class="no-print">
+        <div>
+          <div>
+            <label for="vendor-input">業者名</label>
+            <input type="text" id="vendor-input" />
+            <br />
+            <label for="site-input">現場名</label>
+            <input type="text" id="site-input" />
+          </div>
+          <div>
+            <label for="overtime-input">残業時間（１時間単位）</label>
+            <input
+              type="number"
+              name="overtime-input"
+              id="overtime-input"
+              min="0"
+              step="0.25"
+              value="0"
+            />
+          </div>
+          <div id="way-wrapper">
+            <label for="way-radio">移動手段</label>
+            <label for="way-train">
+              <input
+                type="radio"
+                name="way-radio"
+                value="-1"
+                id="way-nonetrain"
+                checked
+              />
+              なし
+            </label>
+            <label for="way-train">
+              <input
+                type="radio"
+                name="way-radio"
+                value="0"
+                id="way-train"
+              />電車
+            </label>
+            <label for="way-bus">
+              <input type="radio" name="way-radio" value="1" id="way-bus" />バス
+            </label>
+            <label for="way-car">
+              <input type="radio" name="way-radio" value="2" id="way-car" />車
+            </label>
+            <label for="way-bike">
+              <input
+                type="radio"
+                name="way-radio"
+                value="3"
+                id="way-bike"
+              />バイク
+            </label>
+          </div>
+          <hr />
+          <div id="for-timecard-wrapper">
+            <b>勤務確認表用記入欄</b>
+            <div></div>
+            <div>
+              <label for="start-time-input">
+                就業開始時刻
+                <input
+                  type="time"
+                  name="start-time"
+                  id="start-time-input"
+                  value="08:30"
+                  step="900"
+                />
+              </label>
+              <br />
+              <!-- <button>⇩</button>
+            <button onclick="">⇧</button> -->
+              <label for="finish-time-input">
+                就業終了時刻
+                <input
+                  type="time"
+                  name="finish-time"
+                  id="finish-time-input"
+                  value="17:00"
+                  step="900"
+                />
+              </label>
+              <button id="set-work-time-button">就業時間セット</button>
+            </div>
+            <div class="border-rounded">
+              休憩時間
+              <button id="add-rest-time-button" onclick="addRestTime()">
+                追加
+              </button>
+              <div>
+                <button
+                  class="template-button"
+                  onclick="setRestTimeInput('10:30','11:00')"
+                >
+                  10:30~11:00
+                </button>
+                <button
+                  class="template-button"
+                  onclick="setRestTimeInput('12:00','13:00')"
+                >
+                  12:00~13:00
+                </button>
+                <button
+                  class="template-button"
+                  onclick="setRestTimeInput('15:00','15:30')"
+                >
+                  15:00~15:30
+                </button>
+              </div>
+              <div>
+                <label for="rest-start-input">
+                  開始時刻
+                  <input
+                    type="text"
+                    name="rest-start"
+                    id="rest-start-input"
+                    value="10:30"
+                    step="900"
+                  />
+                </label>
+                <br />
+                <label for="rest-finish-input">
+                  終了時刻
+                  <input
+                    type="text"
+                    name="rest-finish"
+                    id="rest-finish-input"
+                    value="11:00"
+                    step="900"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div id="path-detail-wrapper">
+            <div>
+              <div>
+                <label for="roundtrip-radio">
+                  <input
+                    type="radio"
+                    name="roundtrip-rate-radio"
+                    id="roundtrip-radio"
+                    value="2"
+                    checked
+                  />
+                  往復
+                </label>
+                <label for="oneway-radio">
+                  <input
+                    type="radio"
+                    name="roundtrip-rate-radio"
+                    id="oneway-radio"
+                    value="1"
+                  />
+                  片道
+                </label>
+              </div>
+              <div id="car-detali-form-wrapper">
+                <label for="from-input"
+                  >出発地
+                  <input type="text" name="from-input" id="from-input" />
+                </label>
+                <br />
+                <label for="to-input"
+                  >到着地(または経由地)
+                  <input type="text" name="to-input" id="to-input" />
+                </label>
+              </div>
+              <div>
+                <label for="distance-input">
+                  距離
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    id="distance-input"
+                    value="10"
+                  /><span>km</span>
+                </label>
+              </div>
+              <div>
+                <button id="add-detail-button">追加</button>
+              </div>
+            </div>
+            <div id="others-wrapper">
+              <label for="">
+                その他
+                <input type="text" name="others-input" id="others-input" />
+              </label>
+              <label for="others-fee">
+                料金
+                <input
+                  type="number"
+                  name="others-fee"
+                  id="others-fee-input"
+                  value="1"
+                  min="1"
+                />円
+              </label>
+              <div><button id="add-others-button">追加</button></div>
+            </div>
+          </div>
+        </div>
+        <div id="work-content-wrapper">
+          <div id="work-time-row">
+            <label id="work-time-label">就業時間：<span></span></label>
+          </div>
+          <hr />
+          <div id="rest-list">
+            <b>休憩詳細</b>
+            <ol></ol>
+          </div>
+          <hr />
+          <div id="added-details">
+            <b>移動詳細</b>
+            <ol></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <article>
+      <section class="sheet">
+        <div id="row_1">交通費請求書・勤務確認表</div>
+        <div id="row_2">
+          <div class="col_1">
+            切符・領収書等は用紙にホッチキスで外れないように留めて下さい。<br />
+            ※夜勤・現着中止・雨天中止等も記入して下さい。
+          </div>
+          <div class="col_2">
+            <table id="sign">
+              <tr>
+                <td>請求者名</td>
+                <td>&nbsp;<span>月給</span>&nbsp;<span>週給</span>&nbsp;</td>
+                <td id="name-text"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="row_3">
+          <table>
+            <thead>
+              <tr>
+                <td>曜日</td>
+                <td>日付</td>
+                <td colspan="2">業者名・現場名</td>
+                <td>残業</td>
+                <td>交通手段</td>
+                <td colspan="5">利用区間</td>
+                <td>小計</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>金</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>土</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td></td>
+              </tr>
+              <tr>
+                <td>日</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td></td>
+              </tr>
+              <tr>
+                <td>月</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td></td>
+              </tr>
+              <tr>
+                <td>火</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>水</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td></td>
+              </tr>
+              <tr>
+                <td>木</td>
+                <td>
+                  <div class="date-cell">
+                    <div class="month"></div>
+                    <div>/</div>
+                    <div class="day"></div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <table class="normal-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="overtime">
+                  <span class="text"></span>
+                  <div></div>
+                </td>
+                <td>
+                  <div class="path-select">
+                    <div>
+                      <div class="path-way">電車</div>
+                      <div>・</div>
+                      <div class="path-way">バス</div>
+                    </div>
+                    <div>
+                      <div class="path-way">車</div>
+                      <div>・</div>
+                      <div class="path-way">バイク</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td class="path-detail-cell"><div></div></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table class="normal-table path-table">
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td></td>
+              </tr>
+            </tbody>
+            <tfoot id="table-foot">
+              <tr>
+                <td colspan="2">出勤日数</td>
+                <td>
+                  <span></span>
+                  <div></div>
+                </td>
+                <td>残業合計時間</td>
+                <td>
+                  <span></span>
+                  <div></div>
+                </td>
+                <td colspan="4">交通費合計</td>
+                <td colspan="3"><div></div></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div id="row_4">
+          <table>
+            <tr>
+              <td><small>※事務記入欄</small></td>
+              <td>電車</td>
+              <td></td>
+              <td>電車<br />バス</td>
+              <td></td>
+              <td>車</td>
+              <td></td>
+              <td>バイク</td>
+              <td></td>
+              <td>駐車場</td>
+              <td></td>
+              <td>高速代</td>
+              <td></td>
+              <td>（　　　）</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </section>
+    </article>
+
+    <script src="../js/invoice.js"></script>
+    <script src="../js/invoice-init.js"></script>
+  </body>
+</html>

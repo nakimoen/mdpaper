@@ -1,0 +1,177 @@
+body {
+  counter-reset: rest-row;
+}
+.time-cell {
+  font-weight: bold !important;
+}
+div#row_1 {
+  margin-top: 15mm;
+  text-align: center;
+  font-size: 12pt !important;
+}
+
+.rest-row::before {
+  counter-increment: rest-row;
+  content: counter(rest-row) '：';
+}
+
+#input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+#input-wrapper > div {
+  /* display: block; */
+  border-right: 2px dotted black;
+  width: 40%;
+}
+.hour-content {
+  position: relative;
+}
+.hour-content span {
+  margin-right: 0.5em;
+}
+.hour-content div {
+  text-align: center;
+}
+.hour-content div {
+  position: absolute;
+  right: 0;
+  top: 7mm;
+}
+.hour-content div::after {
+  content: 'H';
+  font-size: 7pt;
+}
+.bg-gray {
+  background-color: gainsboro;
+}
+.time-label {
+  font-size: 5pt !important;
+  height: 3mm;
+  max-height: 2.5mm;
+}
+.time-cell {
+  height: 6mm;
+}
+.time-label,
+.time-cell {
+  min-width: 3.5mm;
+  max-width: 3.5mm;
+}
+#detail-table {
+  width: 287mm;
+}
+#detail-table > thead {
+  text-align: center;
+}
+#detail-table > thead > tr:first-child td {
+  font-size: 9pt;
+}
+#detail-table > thead > tr:nth-child(2) td:not(:last-child),
+#detail-table > tbody > tr:nth-of-type(4n + 1) > td:nth-child(4),
+#detail-table > tbody > tr:nth-of-type(4n + 3) > td:nth-child(2),
+.sum-string {
+  font-size: 5.1pt !important;
+}
+
+#detail-table > tbody > tr:first-child > td:nth-child(4) {
+  width: 2mm;
+}
+.h-9 {
+  height: 9mm;
+}
+
+#detail-table > tbody > tr:nth-of-type(4n + 1) > td:nth-child(3),
+#detail-table > tbody > tr:nth-of-type(4n - 1) > td:nth-child(1) {
+  height: 10mm;
+}
+
+#detail-table > thead > tr:first-child td:first-child {
+  width: 193mm;
+}
+#detail-table > thead > tr:first-child td:nth-child(2) {
+  width: 31mm;
+  border: 3px black double;
+}
+#detail-table > thead > tr:first-child td:last-child {
+  width: 61mm;
+  border: 3px black double;
+}
+
+/* 幅サイズ */
+#detail-table > thead > tr:nth-child(2) td:first-child {
+  width: 8mm;
+}
+
+#detail-table > thead > tr:nth-child(2) td:nth-child(2) {
+  width: 11mm;
+}
+
+#detail-table > thead > tr:nth-child(2) td:nth-child(3) {
+  width: 40mm;
+}
+#detail-table > thead > tr:nth-child(2) td:nth-child(4) {
+  width: 15mm;
+  max-width: 15mm;
+}
+#detail-table
+  > thead
+  > tr:nth-child(2)
+  td:nth-of-type(n + 5):nth-of-type(-n + 7) {
+  width: 9mm;
+}
+#detail-table > thead > tr:nth-child(2) td:nth-child(8) {
+  min-width: 182mm;
+  max-width: 183mm;
+}
+
+tbody > tr:first-child > td {
+  border-top: double 3px black;
+}
+thead > tr:last-child {
+  border-bottom: double 3px black;
+  border-top: double 3px black;
+}
+tr > td.border-right-strong:not(:last-child) {
+  border-right: solid 2px black;
+}
+
+#detail-table tr > td:last-child {
+  border-right: double 3px black;
+}
+
+#detail-table > tfoot > tr td:first-child {
+  height: 5mm;
+}
+
+.border-bottom-solid {
+  border-bottom: solid 1px black;
+}
+.border-top-solid {
+  border-top: solid 1px black;
+}
+.border-right-solid {
+  border-right: solid 1px black;
+}
+.border-right-dotted {
+  border-right: 1px dotted black;
+}
+.border-bottom-dotted {
+  border-bottom: 1px dotted black;
+}
+.border-left-double {
+  border-left: 3px double black;
+}
+.border-right-double {
+  border-right: 3px double black;
+}
+.border-bottom-double {
+  border-bottom: 3px double black;
+}
+.border-top-double {
+  border-top: 3px double black;
+}
+
+.border-double {
+  border: 3px double black;
+}
