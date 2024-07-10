@@ -1,5 +1,5 @@
 // 初期化
-document.querySelector('#date-input').dispatchEvent(new Event('change'));
+document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
 (() => {
   const today = new Date();
   let ind = today.getDay();
@@ -117,7 +117,7 @@ function setSumOfFee() {
 //================書き出し
 function output() {
   const startDateStr = document
-    .querySelector('#date-input')
+    .querySelector('#start-date-input')
     .value.replaceAll('-', '');
   const data = {};
   Object.keys(localStorage).filter((key) => {
@@ -176,7 +176,7 @@ function loadALlRow() {
 }
 function loadRow(rowInd) {
   const startDateStr = document
-    .querySelector('#date-input')
+    .querySelector('#start-date-input')
     .value.replaceAll('-', '');
 
   const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
@@ -222,7 +222,9 @@ function loadRow(rowInd) {
   }
 }
 function save() {
-  const key = document.querySelector('#date-input').value.replaceAll('-', '');
+  const key = document
+    .querySelector('#start-date-input')
+    .value.replaceAll('-', '');
 
   const data = (() => {
     const data = localStorage.getItem(key);
