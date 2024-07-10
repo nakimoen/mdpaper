@@ -26,7 +26,7 @@
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
-  page-break-after: always;
+  /* page-break-after: always; */
 
   /* 余白サイズ */
   padding-top: 5mm;
@@ -47,6 +47,9 @@
 }
 /* 印刷用スタイル */
 @media print {
+  body {
+    margin: 0;
+  }
   .no-print {
     display: none;
     height: 0;

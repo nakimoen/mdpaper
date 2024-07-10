@@ -1,6 +1,6 @@
 /* 印刷時の用紙設定 */
 @page {
-  size: B5 landscape; /* 用紙サイズ */
+  size: 257mm 182mm; /* 用紙サイズ */
 }
 
 /* ページレイアウト (section.sheet を１ページとする) */
@@ -13,7 +13,7 @@
 /* 印刷用スタイル */
 @media print {
   body {
-    width: 257mm;
-    height: 182mm;
+    /* width: 257mm; */
+    height: 181mm;
   }
 }

@@ -1,6 +1,6 @@
 /* 印刷時の用紙設定 */
 @page {
-  size: A5 landscape; /* 用紙サイズ */
+  size: 297mm 210mm; /* 用紙サイズ */
 }
 
 /* ページレイアウト (section.sheet を１ページとする) */
