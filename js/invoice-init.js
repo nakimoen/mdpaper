@@ -119,14 +119,40 @@ function output() {
   const startDateStr = document
     .querySelector('#date-input')
     .value.replaceAll('-', '');
-  const data = localStorage.getItem(startDateStr);
-  const blob = new Blob([data], { type: 'application/json' });
+  const data = {};
+  Object.keys(localStorage).filter((key) => {
+    if (/(^\d{8}$)|(name)/.test(key)) {
+      data[key] = localStorage.getItem(key);
+    }
+  });
+  // const data = localStorage.getItem(startDateStr);
+  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
 
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'md_' + startDateStr + '.json';
   a.click();
 }
+//================読み込み
+
+document.getElementById('file-input').addEventListener('change', (evt) => {
+  let input = evt.target;
+  if (input.files.length == 0) {
+    console.log('No file selected');
+    return;
+  }
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    const json = JSON.parse(reader.result);
+    Object.keys(json).forEach((datekey) => {
+      localStorage.setItem(datekey, json[datekey]);
+    });
+  };
+
+  reader.readAsText(file);
+});
+
 //================保存・呼び出し
 function setName() {
   nameStorage(document.querySelector('#name-input').value);
