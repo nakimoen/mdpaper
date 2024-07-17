@@ -7,12 +7,7 @@
 .font-big {
   font-size: 12pt !important;
 }
-.remove-detail-button {
-  border: 1px pink solid;
-  border-radius: 100%;
-  background-color: pink;
-  color: red;
-}
+
 .template-button {
   color: gray;
   border-radius: 20px;

@@ -222,12 +222,12 @@ function loadRow(rowInd) {
   }
 }
 function save() {
-  const key = document
+  const startDayKey = document
     .querySelector('#start-date-input')
     .value.replaceAll('-', '');
 
   const data = (() => {
-    const data = localStorage.getItem(key);
+    const data = localStorage.getItem(startDayKey);
     return data ? JSON.parse(data) : new Object();
   })();
 
@@ -265,5 +265,7 @@ function save() {
     data[i].resttime = RESTTIME[i];
   }
 
-  localStorage.setItem(key, JSON.stringify(data));
+  localStorage.setItem(startDayKey, JSON.stringify(data));
+
+  alert('保存しました');
 }

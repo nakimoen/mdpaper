@@ -238,7 +238,7 @@ function clearRestDraw() {
 }
 function loadRestTime(ind, start, finish) {
   const li = document.createElement('li');
-  li.innerHTML = `<button onclick="removeRestTime('${start}', '${finish}',this)">×</button>${start}~${finish}`;
+  li.innerHTML = `<button class="remove-button" onclick="removeRestTime('${start}', '${finish}',this)">×</button>${start}~${finish}`;
 
   document.querySelector('#rest-list ol').appendChild(li);
 }
@@ -301,7 +301,7 @@ function addDetailList(strHTML, notbutton = false, numberstr) {
   const li = document.createElement('li');
   li.setAttribute('no', detail_number);
   li.innerHTML =
-    '<button class="remove-detail-button" no="' +
+    '<button class="remove-button" no="' +
     detail_number +
     '">×</button>' +
     strHTML;

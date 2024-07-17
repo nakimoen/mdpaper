@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/paper-common.css" />
     <link rel="stylesheet" href="../css/b5.css" />
     <link rel="stylesheet" href="../css/util.css" />
+    <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/invoice.css" />
     <link rel="stylesheet" href="../css/invoice-work-content.css" />
   </head>
@@ -22,20 +23,20 @@
       </ul>
       <div>
         <button onclick="reset()">リセット</button>
-        <button onclick="save()">保存</button>
+        <button class="action-button" onclick="save()">データ保存</button>
         <button onclick="print()">印刷</button>
+        <br />
+        <label for="name-input">
+          請求者<input type="text" id="name-input" />
+          <button id="save-name-button" onclick="setName()">保存</button>
+        </label>
+
         <hr />
         <button onclick="output()">書き出し</button>
         <input type="file" id="file-input" />
       </div>
       <hr />
 
-      <hr />
-      <label for="name-input">
-        請求者<input type="text" id="name-input" />
-        <button id="save-name-button" onclick="setName()">保存</button>
-      </label>
-      <hr />
       <label for="start-date-input">
         データを参照する週の初日（金曜日）
         <input type="date" name="first-date" id="start-date-input" />
@@ -116,7 +117,7 @@
                   type="time"
                   name="start-time"
                   id="start-time-input"
-                  value="08:30"
+                  value="08:00"
                   step="900"
                 />
               </label>
@@ -164,10 +165,10 @@
                 <label for="rest-start-input">
                   開始時刻
                   <input
-                    type="text"
+                    type="time"
                     name="rest-start"
                     id="rest-start-input"
-                    value="10:30"
+                    value="10:00"
                     step="900"
                   />
                 </label>
@@ -175,10 +176,10 @@
                 <label for="rest-finish-input">
                   終了時刻
                   <input
-                    type="text"
+                    type="time"
                     name="rest-finish"
                     id="rest-finish-input"
-                    value="11:00"
+                    value="10:30"
                     step="900"
                   />
                 </label>
