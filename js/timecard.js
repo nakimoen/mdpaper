@@ -41,9 +41,11 @@ function drawWorkSF() {
         [i].querySelector('span').innerText = resttotal;
 
       const [h, m] = start.split(':');
+      const [fh, fm] = finish.split(':');
       document
         .querySelectorAll('.work-cell')
-        [i].querySelector('span').innerText = Number(h) + m / 60 - resttotal;
+        [i].querySelector('span').innerText =
+        Number(fh) - Number(h) + (fm - m) / 60 - resttotal;
 
       document
         .querySelectorAll('.overtime-cell')
