@@ -274,3 +274,20 @@ function save() {
 
   alert('保存しました');
 }
+
+//
+// テンプレート呼び出し
+//
+(() => {
+  const site = localStorage.getItem('siteList');
+  if (site) {
+    const list = JSON.parse(site);
+    const sele = document.querySelector('#site-select');
+    list.forEach((item) => {
+      const opt = document.createElement('option');
+      opt.value = item;
+      opt.innerText = item;
+      sele.appendChild(opt);
+    });
+  }
+})();

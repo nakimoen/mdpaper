@@ -163,6 +163,7 @@ document.querySelector('#vendor-input').addEventListener('change', function () {
 });
 document.querySelector('#site-input').addEventListener('change', function () {
   setname(this, 1);
+  addSiteTemplate();
 });
 
 // 残業
