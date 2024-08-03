@@ -56,7 +56,8 @@
             <input type="text" id="vendor-input" />
             <br />
             <label for="site-input">現場名</label>
-            <input type="text" id="site-input" />
+            <!-- <input type="text" id="site-input" /> -->
+            <textarea name="site-input" id="site-input"></textarea>
           </div>
           <div>
             <label for="overtime-input">残業時間</label>
@@ -134,13 +135,13 @@
                   step="900"
                 />
               </label>
+              <br />
+              <br />
               <button id="set-work-time-button">就業時間セット</button>
             </div>
+            <br />
             <div class="border-rounded">
               休憩時間
-              <button id="add-rest-time-button" onclick="addRestTime()">
-                追加
-              </button>
               <div>
                 <button
                   class="template-button"
@@ -184,6 +185,9 @@
                   />
                 </label>
               </div>
+              <button id="add-rest-time-button" onclick="addRestTime()">
+                追加
+              </button>
             </div>
           </div>
           <hr />
@@ -218,7 +222,8 @@
                 <br />
                 <label for="to-input">
                   到着地
-                  <input type="text" name="to-input" id="to-input" />
+                  <!-- <input type="text" name="to-input" id="to-input" /> -->
+                  <textarea name="to-input" id="to-input"></textarea>
                 </label>
               </div>
               <div>

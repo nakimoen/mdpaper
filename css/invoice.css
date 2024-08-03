@@ -119,6 +119,10 @@ div#row_3 > table tbody td {
 div#row_3 table tr td:nth-child(3) td {
   height: 8mm;
 }
+div#row_3 table tr td:nth-child(3) td > div {
+  height: 8mm;
+  align-content: center;
+}
 div#row_3 > table tr td:first-child {
   border-left: 4px black double;
 }

@@ -145,12 +145,18 @@ document.querySelector('#date-select').addEventListener('change', function () {
 
 //業者・現場
 function setname(self, id) {
-  const name = self.value;
+  const name = typeof self == 'string' ? self : self.value;
   const row = getCurrentRow();
   const query = `td:nth-child(3) tr:${
     id == 0 ? 'first-child' : 'nth-child(2)'
   } td`;
-  row.querySelector(query).textContent = name;
+  const cell = row.querySelector(query);
+  cell.innerHTML =
+    '<div><div>' + name.replaceAll('\n', '<br>') + '</div></div>';
+  autoFontSizeHeight(
+    cell.querySelector('div'),
+    cell.querySelector('div > div')
+  );
 }
 document.querySelector('#vendor-input').addEventListener('change', function () {
   setname(this, 0);
@@ -389,3 +395,29 @@ document
     addTextToDetailsDiv(str);
     addDetailList(str);
   });
+
+//
+// 文字サイズ
+//
+function autoFontSizeWidth(wrap, elem) {
+  while (wrap.scrollWidth > wrap.offsetWidth) {
+    const fontSize = parseFloat(window.getComputedStyle(elem).fontSize);
+    if (fontSize < 10) {
+      elem.style.textWrap = 'wrap';
+      break;
+    }
+    const newSize = fontSize - 1;
+    elem.style.fontSize = newSize + 'px';
+  }
+}
+function autoFontSizeHeight(wrap, elem) {
+  while (wrap.scrollHeight > wrap.offsetHeight) {
+    const fontSize = parseFloat(window.getComputedStyle(elem).fontSize);
+    if (fontSize < 10) {
+      elem.style.textWrap = 'wrap';
+      break;
+    }
+    const newSize = fontSize - 1;
+    elem.style.fontSize = newSize + 'px';
+  }
+}

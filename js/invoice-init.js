@@ -188,7 +188,12 @@ function loadRow(rowInd) {
 
     const [tdVendor, tdSite] = row.querySelectorAll('td:nth-child(3) td');
     tdVendor.textContent = rowData.vendor;
-    tdSite.textContent = rowData.site;
+    tdSite.innerHTML =
+      '<div><div>' + rowData.site.replaceAll('\n', '<br>') + '</div></div>';
+    autoFontSizeHeight(
+      tdSite.querySelector('div'),
+      tdSite.querySelector('div > div')
+    );
 
     const overtime = row.querySelector('td:nth-child(4) span');
     overtime.textContent = rowData.overtime;
