@@ -124,6 +124,7 @@ document.querySelector('#date-select').addEventListener('change', function () {
       break;
     }
   }
+
   //
   // 各経路情報の読み込み
   //
@@ -134,6 +135,9 @@ document.querySelector('#date-select').addEventListener('change', function () {
     addDetailList(detail.innerHTML, true, detail.getAttribute('no'));
   });
 
+  //
+  // TODO: 就業時間読み込み直し
+  //
   clearRestDraw();
   rowData.resttime.forEach((resttime) => {
     loadRestTime(ind, resttime.start, resttime.finish);
