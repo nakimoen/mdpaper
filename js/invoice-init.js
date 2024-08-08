@@ -21,11 +21,11 @@ document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
   // load
   loadALlRow();
   // ポスト数
-  setPostSum();
+  drawPostSum();
   // 残業
-  setOvertimeSum();
+  drawOvertimeSum();
   // 経費合計
-  setSumOfFee();
+  drawSumOfFee();
 })();
 
 function reset() {
@@ -51,9 +51,9 @@ function reset() {
     });
   });
 
-  setPostSum();
-  setOvertimeSum();
-  setSumOfFee();
+  drawPostSum();
+  drawOvertimeSum();
+  drawSumOfFee();
 
   clearDetails();
   clearWorkRestTime();
@@ -62,7 +62,7 @@ function reset() {
 document.querySelector('#date-select').dispatchEvent(new Event('change'));
 
 //================ポスト数
-function setPostSum() {
+function drawPostSum() {
   document.querySelector(
     '#row_3 #table-foot > tr > td:nth-child(2) span'
   ).textContent = (() => {
@@ -71,7 +71,7 @@ function setPostSum() {
     for (let i = 0; i < 7; i++) {
       const row = rows[i];
       const text = row.querySelector('td:nth-child(3) td').innerText;
-      if (text && !text.match(/.*中止.*/)) {
+      if (text && text.trim() && !text.match(/.*中止.*/)) {
         count++;
       }
     }
@@ -80,7 +80,7 @@ function setPostSum() {
 }
 
 //残業
-function setOvertimeSum() {
+function drawOvertimeSum() {
   const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
 
   let overtime = 0;
@@ -99,7 +99,7 @@ function setOvertimeSum() {
     ).innerText = overtime;
 }
 
-function setSumOfFee() {
+function drawSumOfFee() {
   const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
 
   let sum = 0;
@@ -200,11 +200,13 @@ function loadRow(rowInd) {
 
     const pathWays = row.querySelectorAll('td .path-select .path-way');
     for (let way of pathWays) {
+      way.classList.remove('way-selected');
       if (data[rowInd].way == way.innerHTML) {
         way.classList.add('way-selected');
         break;
       }
     }
+
     const path = row.querySelector('.path-detail-cell > div');
     path.innerHTML = rowData.path;
     path.querySelectorAll('div').forEach((div) => {
@@ -225,54 +227,6 @@ function loadRow(rowInd) {
 
     RESTTIME[rowInd] = data[rowInd].resttime;
   }
-}
-function save() {
-  const startDayKey = document
-    .querySelector('#start-date-input')
-    .value.replaceAll('-', '');
-
-  const data = (() => {
-    const data = localStorage.getItem(startDayKey);
-    return data ? JSON.parse(data) : new Object();
-  })();
-
-  const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
-
-  for (let i = 0; i < 7; i++) {
-    if (!data[i]) {
-      data[i] = {};
-    }
-    const row = rows[i];
-    const [tdVendor, tdSite] = row.querySelectorAll('td:nth-child(3) td');
-    data[i].vendor = tdVendor.textContent;
-    data[i].site = tdSite.textContent;
-
-    const overtime = row.querySelector('td:nth-child(4) span').textContent;
-    data[i].overtime = overtime;
-
-    const pathWay = row.querySelector('.path-select .way-selected');
-    if (pathWay) {
-      data[i].way = pathWay.textContent;
-    } else {
-      data[i].way = 'なし';
-    }
-
-    const path = row.querySelector('.path-detail-cell > div').innerHTML;
-    data[i].path = path;
-
-    const fee = row.cells[10].textContent;
-    data[i].fee = fee;
-
-    //就業時間
-    data[i].worktime = WORKTIME[i];
-
-    // 休憩
-    data[i].resttime = RESTTIME[i];
-  }
-
-  localStorage.setItem(startDayKey, JSON.stringify(data));
-
-  alert('保存しました');
 }
 
 //

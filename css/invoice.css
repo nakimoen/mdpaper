@@ -34,6 +34,10 @@ div#input-container > div {
 #input-container > div input[type='number'] {
   max-width: 70%;
 }
+
+#site-select {
+  max-width: 100%;
+}
 /**===========================**/
 
 div#row_1 {

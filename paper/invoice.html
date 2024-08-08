@@ -48,7 +48,53 @@
         </label>
       </div>
       <hr />
-
+      <div class="border-rounded">
+        休憩時間
+        <div>
+          <button
+            class="template-button"
+            onclick="setRestTimeInput('10:30','11:00')"
+          >
+            10:30~11:00
+          </button>
+          <button
+            class="template-button"
+            onclick="setRestTimeInput('12:00','13:00')"
+          >
+            12:00~13:00
+          </button>
+          <button
+            class="template-button"
+            onclick="setRestTimeInput('15:00','15:30')"
+          >
+            15:00~15:30
+          </button>
+        </div>
+        <div>
+          <label for="rest-start-input">
+            開始時刻
+            <input
+              type="time"
+              name="rest-start"
+              id="rest-start-input"
+              value="10:00"
+              step="900"
+            />
+          </label>
+          <br />
+          <label for="rest-finish-input">
+            終了時刻
+            <input
+              type="time"
+              name="rest-finish"
+              id="rest-finish-input"
+              value="10:30"
+              step="900"
+            />
+          </label>
+        </div>
+        <button id="add-rest-time-button" onclick="addRestTime()">追加</button>
+      </div>
       <div id="input-container" class="no-print">
         <div>
           <div>
@@ -76,6 +122,41 @@
               value="0"
             />h
           </div>
+          <hr />
+          <div id="for-timecard-wrapper">
+            <b>勤務確認表用記入欄</b>
+            <div></div>
+            <div>
+              <label for="start-time-input">
+                就業開始時刻
+                <input
+                  type="time"
+                  name="start-time"
+                  id="start-time-input"
+                  value="08:00"
+                  step="900"
+                />
+              </label>
+              <br />
+              <!-- <button>⇩</button>
+            <button onclick="">⇧</button> -->
+              <label for="finish-time-input">
+                就業終了時刻
+                <input
+                  type="time"
+                  name="finish-time"
+                  id="finish-time-input"
+                  value="17:00"
+                  step="900"
+                />
+              </label>
+              <br />
+              <br />
+              <button id="set-work-time-button">就業時間セット</button>
+            </div>
+            <br />
+          </div>
+          <hr />
           <div id="way-wrapper">
             <label for="way-radio">移動手段</label>
             <br />
@@ -113,90 +194,7 @@
               />バイク
             </label>
           </div>
-          <hr />
-          <div id="for-timecard-wrapper">
-            <b>勤務確認表用記入欄</b>
-            <div></div>
-            <div>
-              <label for="start-time-input">
-                就業開始時刻
-                <input
-                  type="time"
-                  name="start-time"
-                  id="start-time-input"
-                  value="08:00"
-                  step="900"
-                />
-              </label>
-              <br />
-              <!-- <button>⇩</button>
-            <button onclick="">⇧</button> -->
-              <label for="finish-time-input">
-                就業終了時刻
-                <input
-                  type="time"
-                  name="finish-time"
-                  id="finish-time-input"
-                  value="17:00"
-                  step="900"
-                />
-              </label>
-              <br />
-              <br />
-              <button id="set-work-time-button">就業時間セット</button>
-            </div>
-            <br />
-            <div class="border-rounded">
-              休憩時間
-              <div>
-                <button
-                  class="template-button"
-                  onclick="setRestTimeInput('10:30','11:00')"
-                >
-                  10:30~11:00
-                </button>
-                <button
-                  class="template-button"
-                  onclick="setRestTimeInput('12:00','13:00')"
-                >
-                  12:00~13:00
-                </button>
-                <button
-                  class="template-button"
-                  onclick="setRestTimeInput('15:00','15:30')"
-                >
-                  15:00~15:30
-                </button>
-              </div>
-              <div>
-                <label for="rest-start-input">
-                  開始時刻
-                  <input
-                    type="time"
-                    name="rest-start"
-                    id="rest-start-input"
-                    value="10:00"
-                    step="900"
-                  />
-                </label>
-                <br />
-                <label for="rest-finish-input">
-                  終了時刻
-                  <input
-                    type="time"
-                    name="rest-finish"
-                    id="rest-finish-input"
-                    value="10:30"
-                    step="900"
-                  />
-                </label>
-              </div>
-              <button id="add-rest-time-button" onclick="addRestTime()">
-                追加
-              </button>
-            </div>
-          </div>
-          <hr />
+
           <div id="path-detail-wrapper">
             <div>
               <div>
@@ -1103,7 +1101,9 @@
 
     <script src="../js/invoice.js"></script>
     <script src="../js/invoice-controll.js"></script>
+    <script src="../js/event.js"></script>
     <script src="../js/invoice-init.js"></script>
+    <script src="../js/storage.js"></script>
     <script src="../js/common.js"></script>
   </body>
 </html>

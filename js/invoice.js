@@ -39,114 +39,6 @@ function getCurrentRow() {
   input.value = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
 })();
 
-document.querySelector('#name-input').addEventListener('change', function () {
-  document.querySelector('#name-text').innerText = this.value;
-});
-
-// 開始日を入力（インプト）
-document
-  .querySelector('#start-date-input')
-  .addEventListener('change', function (e) {
-    reset();
-    const [year, month, day] = this.value.split('-');
-    loadALlRow();
-
-    const date = new Date(this.value);
-
-    if (date.getDay() !== 5) {
-      alert('金曜日を選択してください');
-      return;
-    }
-    // 各曜日の日付を表示
-    document.querySelectorAll('.date-cell').forEach((elem, ind) => {
-      const month = Number(date.getMonth() + 1);
-      const d = Number(date.getDate());
-      // row に ID（m-d）を振る
-      elem.closest('tr').setAttribute('id', 'r' + month + d);
-      elem.closest('tr').setAttribute('no', ind);
-      elem.querySelector('.month').innerHTML = month;
-      elem.querySelector('.day').innerHTML = d;
-      date.setDate(date.getDate() + 1);
-    });
-
-    // 入力する日付リストを生成
-    const select = document.querySelector('#date-select');
-    select.innerHTML = '';
-    const start = new Date(this.value);
-    start.setDate(start.getDate());
-    for (i = 0; i < 7; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      const opt = document.createElement('option');
-      const mm = date.getMonth() + 1;
-      opt.text =
-        mm +
-        '/' +
-        date.getDate() +
-        `(${['金', '土', '日', '月', '火', '水', '木'][i]})`;
-      opt.value = i + 1;
-
-      select.appendChild(opt);
-    }
-    document.querySelector('#date-select').dispatchEvent(new Event('change'));
-
-    const today = new Date();
-    today.getDate();
-
-    setPostSum();
-    setOvertimeSum();
-  });
-
-document.querySelector('#date-select').addEventListener('change', function () {
-  const md = this.selectedOptions[0].text.slice(0, -3);
-  ROW_ID = 'r' + md.replaceAll('/', '');
-
-  const startDateStr = document
-    .querySelector('#start-date-input')
-    .value.replaceAll('-', '');
-
-  const data = localStorage.getItem(startDateStr);
-  const ind = this.selectedIndex;
-  const rowData = data ? JSON.parse(data)[ind] : null;
-  //TODO: validation
-  document.querySelector('#vendor-input').value =
-    data && rowData.vendor ? rowData.vendor : '';
-  document.querySelector('#site-input').value =
-    data && rowData.site ? rowData.site : '';
-  document.querySelector('#overtime-input').value =
-    data && rowData.overtime ? rowData.overtime : 0;
-
-  document.querySelector('[name=way-radio]').checked = true;
-  for (let way of document.querySelectorAll('[name=way-radio]')) {
-    const label = way.closest('label');
-    if (data && label.textContent.trim() == rowData.way) {
-      way.checked = true;
-      break;
-    }
-  }
-
-  //
-  // 各経路情報の読み込み
-  //
-  const rowdetails = DETAILS[this.selectedIndex];
-  // reset list
-  resetDetailOL();
-  rowdetails.forEach((detail, ind) => {
-    addDetailList(detail.innerHTML, true, detail.getAttribute('no'));
-  });
-
-  //
-  // TODO: 就業時間読み込み直し
-  //
-  clearRestDraw();
-  rowData.resttime.forEach((resttime) => {
-    loadRestTime(ind, resttime.start, resttime.finish);
-  });
-
-  setPostSum();
-  setOvertimeSum();
-});
-
 //業者・現場
 function setname(self, id) {
   const name = typeof self == 'string' ? self : self.value;
@@ -162,52 +54,19 @@ function setname(self, id) {
     cell.querySelector('div > div')
   );
 }
-document.querySelector('#vendor-input').addEventListener('change', function () {
-  setname(this, 0);
-});
-document.querySelector('#site-input').addEventListener('change', function () {
-  setname(this, 1);
-  addSiteTemplate();
-});
-
-// 残業
-document
-  .querySelector('#overtime-input')
-  .addEventListener('change', function () {
-    const row = getCurrentRow();
-    row.querySelector('td:nth-child(4) span').textContent = this.value;
-    setOvertimeSum();
-  });
-
-// 移動手段
-document.querySelectorAll('#way-wrapper [type=radio]').forEach((elem) => {
-  elem.addEventListener('change', function () {
-    const wayind = Number(this.value);
-    const row = getCurrentRow();
-    const waydivs = row.querySelectorAll(
-      'td:nth-child(5) .path-select .path-way'
-    );
-    // リセット
-    waydivs.forEach((elem) => {
-      elem.classList.remove('way-selected');
-    });
-    // セット
-    if (wayind != -1) waydivs[wayind].classList.add('way-selected');
-  });
-});
 
 // 就業時間
 function loadSaveWorkTime(ind, start, finish) {
   if (start && finish) {
     WORKTIME[ind].start = start;
     WORKTIME[ind].finish = finish;
+    document.querySelector('#work-time-label span').innerHTML =
+      !start || !finish
+        ? ''
+        : '<button onclick="clearWorktime()">×</button>' + start + '~' + finish;
   }
-
-  document.querySelector('#work-time-label span').innerHTML =
-    !start || !finish
-      ? ''
-      : '<button onclick="clearWorktime()">×</button>' + start + '~' + finish;
 }
+
 function setWorkTime(load = false, start = null, finish = null) {
   const ind = Number(getCurrentRow().getAttribute('no'));
   const info = ((st, fin) => {
@@ -324,9 +183,9 @@ function addDetailList(strHTML, notbutton = false, numberstr) {
 
   if (!notbutton) NEXT_DETAIL_NUMBER++;
 
-  setSumOfFee();
-  setPostSum();
-  setOvertimeSum();
+  drawSumOfFee();
+  drawPostSum();
+  drawOvertimeSum();
 
   document.querySelector('#overtime-input').dispatchEvent(new Event('change'));
 
@@ -359,47 +218,8 @@ function removeDetail(number) {
   //小計再計算
   calcRowFee(getCurrentRow());
 
-  setSumOfFee();
+  drawSumOfFee();
 }
-document
-  .querySelector('#add-detail-button')
-  .addEventListener('click', function (e) {
-    const roundtriprate = document.querySelector(
-      '[name=roundtrip-rate-radio]:checked'
-    ).value;
-    const fromElem = document.querySelector('#from-input');
-    const toElem = document.querySelector('#to-input');
-    const distanceElem = document.querySelector('#distance-input');
-
-    if (!(fromElem.value && toElem.value && distanceElem.value)) {
-      return alert('空欄があります。');
-    }
-
-    const fee = distanceElem.value * COST_PER_KM * roundtriprate;
-
-    const str = `${fromElem.value} ⇒ ${toElem.value}　${
-      roundtriprate == 2 ? '2×' : ''
-    }${distanceElem.value}km×${COST_PER_KM}＝<b>${fee}</b>`;
-
-    fromElem.value = '';
-    toElem.value = '';
-    addTextToDetailsDiv(str);
-    addDetailList(str);
-  });
-
-document
-  .querySelector('#add-others-button')
-  .addEventListener('click', function (e) {
-    const textElem = document.querySelector('#others-input');
-    const feeElem = document.querySelector('#others-fee-input');
-    if (!textElem.value && !feeElem.value) {
-      return alert('空欄があります。');
-    }
-    const str =
-      textElem.value + (feeElem.value ? '＝<b>' + feeElem.value + '</b>' : '');
-    addTextToDetailsDiv(str);
-    addDetailList(str);
-  });
 
 //
 // 文字サイズ

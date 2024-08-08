@@ -37,8 +37,3 @@ function deleteSiteTemplate() {
       if (opt.innerText === val) opt.remove();
     });
 }
-document.querySelector('#site-select').addEventListener('change', function () {
-  const siteinput = document.querySelector('#site-input');
-  siteinput.value = this.value;
-  siteinput.dispatchEvent('change');
-});
