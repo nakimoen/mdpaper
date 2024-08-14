@@ -59,13 +59,14 @@ function drawWorkSF() {
 
       // 休憩時間マーク
       rowData.resttime.forEach((rest) => {
-        const [ns, minutes] = rest.start.split(':');
-        const startlabel = Number(ns) + ':' + minutes;
+        // const [ns, minutes] = rest.start.split(':');
+        const startlabel = rest.start;
         const [nfs, fminutes] = rest.finish.split(':');
         const finishlabel = Number(nfs) + ':' + fminutes;
 
         let label = startlabel;
-        while (label.replace(':', '') < finishlabel.replace(':', '')) {
+        const finishCond = finishlabel.replace(':', '') - 0;
+        while (label.replace(':', '') - 0 < finishCond) {
           document.querySelectorAll('[data-label="' + label + '"]')[
             i
           ].innerText = '○';
