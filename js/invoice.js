@@ -57,14 +57,14 @@ function setname(self, id) {
 
 // 就業時間
 function loadSaveWorkTime(ind, start, finish) {
-  if (start && finish) {
-    WORKTIME[ind].start = start;
-    WORKTIME[ind].finish = finish;
-    document.querySelector('#work-time-label span').innerHTML =
-      !start || !finish
-        ? ''
-        : '<button onclick="clearWorktime()">×</button>' + start + '~' + finish;
-  }
+  const st = start ? start : '';
+  const fin = finish ? finish : '';
+  WORKTIME[ind].start = st;
+  WORKTIME[ind].finish = fin;
+  document.querySelector('#work-time-label span').innerHTML =
+    !st || !fin
+      ? ''
+      : '<button onclick="clearWorktime()">×</button>' + st + '~' + fin;
 }
 
 function setWorkTime(load = false, start = null, finish = null) {
@@ -194,11 +194,13 @@ function addDetailList(strHTML, notbutton = false, numberstr) {
 
 function calcRowFee(row) {
   let sumfee = 0;
-  row.querySelectorAll('.path-detail-cell b').forEach((elem) => {
-    sumfee += Number(elem.innerText);
+  const pathDivs = row.querySelectorAll('.path-detail-cell > div > div');
+  pathDivs.forEach((elem) => {
+    const btag = elem.querySelector('b');
+    if (btag) sumfee += Number(btag.innerText);
   });
   row.querySelector('td:nth-child(11)').innerText =
-    sumfee == 0 ? '' : new String(sumfee).toLocaleString();
+    pathDivs.length > 0 ? new String(sumfee).toLocaleString() : '';
 }
 
 function removeDetail(number) {
