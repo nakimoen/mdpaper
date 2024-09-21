@@ -97,11 +97,13 @@ document.querySelector('#date-select').addEventListener('change', function () {
   //
   // TODO: 就業時間読み込み直し
   //
-  loadSaveWorkTime(ind, rowData.worktime.start, rowData.worktime.finish);
-  clearRestDraw();
-  rowData.resttime.forEach((resttime) => {
-    loadRestTime(ind, resttime.start, resttime.finish);
-  });
+  if (rowData) {
+    loadSaveWorkTime(ind, rowData.worktime.start, rowData.worktime.finish);
+    clearRestDraw();
+    rowData.resttime.forEach((resttime) => {
+      loadRestTime(ind, resttime.start, resttime.finish);
+    });
+  }
 
   drawPostSum();
   drawOvertimeSum();

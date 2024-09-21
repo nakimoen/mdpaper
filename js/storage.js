@@ -17,7 +17,10 @@ function save() {
     const row = rows[i];
     const [tdVendor, tdSite] = row.querySelectorAll('td:nth-child(3) td');
     data[i].vendor = tdVendor.textContent;
-    data[i].site = tdSite.textContent;
+    data[i].site = (() => {
+      const text = tdSite.querySelector('div > div');
+      return text ? text.innerHTML : '';
+    })();
 
     const overtime = row.querySelector('td:nth-child(4) span').textContent;
     data[i].overtime = overtime;
