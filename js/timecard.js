@@ -101,7 +101,7 @@ document
       document
         .querySelectorAll('.' + cellname + '-cell')
         .forEach((cell, ind) => {
-          cell.innerText = DATA ? DATA[ind][cellname] : '';
+          cell.innerHTML = DATA ? DATA[ind][cellname] : '';
         });
     }
     const key = this.value.replace(/-/g, '');
