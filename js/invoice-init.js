@@ -70,9 +70,26 @@ function drawPostSum() {
     const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
     for (let i = 0; i < 7; i++) {
       const row = rows[i];
-      const text = row.querySelector('td:nth-child(3) td').innerText;
-      if (text && text.trim() && !text.match(/.*中止.*/)) {
-        count++;
+      const cell = row.querySelector('td:nth-child(3) td');
+      const text = cell.innerText;
+      if (text && text.trim()) {
+        const found = text.match(/.*((..)中止).*/);
+        if (found) {
+          const sitecell = row.querySelector(
+            'td:nth-child(3) tr:nth-child(2) td'
+          );
+
+          if (found[2] === '現着') {
+            count += 0.5;
+            cell.style.color = 'blue';
+            sitecell.style.color = 'blue';
+          } else {
+            cell.style.color = 'red';
+            sitecell.style.color = 'red';
+          }
+        } else {
+          count++;
+        }
       }
     }
     return count;

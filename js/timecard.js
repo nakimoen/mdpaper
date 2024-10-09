@@ -101,9 +101,29 @@ document
       document
         .querySelectorAll('.' + cellname + '-cell')
         .forEach((cell, ind) => {
-          cell.innerHTML = DATA ? DATA[ind][cellname] : '';
+          cell.innerHTML = DATA ? '<div>' + DATA[ind][cellname] + '</div>' : '';
+          const cellContainer = cell.querySelector('div');
+          //フォントサイズ自動調整
+          // そもそも最初のサイズが小さいので、無限ループにすぐ入る
+          // TODO: 読み込み時
+          while (
+            cell.scrollWidth > cellContainer.offsetWidth ||
+            cell.scrollHeight >= cellContainer.scrollHeight
+          ) {
+            const newline = cellContainer;
+            const fontSize = parseFloat(
+              window.getComputedStyle(newline).fontSize
+            );
+            if (fontSize < 10) {
+              newline.style.textWrap = 'wrap';
+              break;
+            }
+            const newSize = fontSize - 1;
+            newline.style.fontSize = newSize + 'px';
+          }
         });
     }
+
     const key = this.value.replace(/-/g, '');
     DATA = JSON.parse(localStorage.getItem(key));
 

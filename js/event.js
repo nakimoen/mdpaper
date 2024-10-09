@@ -111,6 +111,7 @@ document.querySelector('#date-select').addEventListener('change', function () {
 
 document.querySelector('#vendor-input').addEventListener('change', function () {
   setname(this, 0);
+  drawPostSum();
 });
 document.querySelector('#site-input').addEventListener('change', function () {
   setname(this, 1);
