@@ -71,7 +71,7 @@ document.querySelector('#date-select').addEventListener('change', function () {
   document.querySelector('#vendor-input').value =
     data && rowData.vendor ? rowData.vendor : '';
   document.querySelector('#site-input').value =
-    data && rowData.site ? rowData.site : '';
+    data && rowData.site ? rowData.site.replaceAll('<br>', '\n') : '';
   document.querySelector('#overtime-input').value =
     data && rowData.overtime ? rowData.overtime : 0;
 
@@ -116,6 +116,13 @@ document.querySelector('#vendor-input').addEventListener('change', function () {
 document.querySelector('#site-input').addEventListener('change', function () {
   setname(this, 1);
   addSiteTemplate();
+});
+
+// 現場セレクト
+document.querySelector('#site-select').addEventListener('change', function () {
+  const siteinput = document.querySelector('#site-input');
+  siteinput.value = this.value.replaceAll('<br>', '\n');
+  siteinput.dispatchEvent(new Event('change'));
 });
 
 // 残業
@@ -183,10 +190,3 @@ document
     addTextToDetailsDiv(str);
     addDetailList(str);
   });
-
-// 現場セレクト
-document.querySelector('#site-select').addEventListener('change', function () {
-  const siteinput = document.querySelector('#site-input');
-  siteinput.value = this.value;
-  siteinput.dispatchEvent(new Event('change'));
-});
