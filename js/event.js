@@ -118,6 +118,13 @@ document.querySelector('#site-input').addEventListener('change', function () {
   addSiteTemplate();
 });
 
+// 現場セレクト
+document.querySelector('#site-select').addEventListener('change', function () {
+  const siteinput = document.querySelector('#site-input');
+  siteinput.value = this.value.replaceAll('<br>', '\n');
+  siteinput.dispatchEvent(new Event('change'));
+});
+
 // 残業
 document
   .querySelector('#overtime-input')
@@ -183,10 +190,3 @@ document
     addTextToDetailsDiv(str);
     addDetailList(str);
   });
-
-// 現場セレクト
-document.querySelector('#site-select').addEventListener('change', function () {
-  const siteinput = document.querySelector('#site-input');
-  siteinput.value = this.value;
-  siteinput.dispatchEvent(new Event('change'));
-});
