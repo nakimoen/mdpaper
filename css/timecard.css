@@ -86,6 +86,12 @@ div#row_1 {
   height: 10mm;
 }
 
+#detail-table > tbody > tr:nth-of-type(4n + 1) > td:nth-child(3) div,
+#detail-table > tbody > tr:nth-of-type(4n - 1) > td:nth-child(1) div {
+  height: 10mm;
+  overflow: hidden;
+}
+
 #detail-table > thead > tr:first-child td:first-child {
   width: 193mm;
 }

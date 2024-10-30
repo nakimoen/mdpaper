@@ -114,8 +114,9 @@ document
             const fontSize = parseFloat(
               window.getComputedStyle(newline).fontSize
             );
-            if (fontSize < 10) {
+            if (fontSize < 8.9) {
               newline.style.textWrap = 'wrap';
+              newline.style.fontSize = 8;
               break;
             }
             const newSize = fontSize - 1;

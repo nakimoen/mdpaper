@@ -1,0 +1,10 @@
+button {
+  border-radius: 1rem;
+  border-color: lightsalmon;
+  background-color: white;
+  margin: 0.5rem;
+}
+
+input {
+  margin: 0.3rem;
+}
