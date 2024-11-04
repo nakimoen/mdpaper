@@ -61,41 +61,11 @@ function loadSaveWorkTime(ind, start, finish) {
   const fin = finish ? finish : '';
   WORKTIME[ind].start = st;
   WORKTIME[ind].finish = fin;
-  document.querySelector('#work-time-label span').innerHTML =
-    !st || !fin
-      ? ''
-      : '<button onclick="clearWorktime()">×</button>' + st + '~' + fin;
+  const sinput = document.querySelector('#start-time-input');
+  const finput = document.querySelector('#finish-time-input');
+  sinput.value = WORKTIME[ind].start;
+  finput.value = WORKTIME[ind].finish;
 }
-
-function setWorkTime(load = false, start = null, finish = null) {
-  const ind = Number(getCurrentRow().getAttribute('no'));
-  const info = ((st, fin) => {
-    if (load) {
-      return WORKTIME[ind];
-    } else {
-      const sinput = document.querySelector('#start-time-input');
-      const finput = document.querySelector('#finish-time-input');
-      const start = st ? st : sinput.value;
-      const finish = fin ? fin : finput.value;
-      return { start, finish };
-    }
-  })(start, finish);
-
-  loadSaveWorkTime(ind, info.start, info.finish);
-
-  return info;
-}
-
-function clearWorktime() {
-  const ind = Number(getCurrentRow().getAttribute('no'));
-  WORKTIME[ind] = {};
-  document.querySelector('#work-time-label span').innerHTML = '';
-}
-document
-  .querySelector('#set-work-time-button')
-  .addEventListener('click', function () {
-    setWorkTime();
-  });
 
 //休憩時間
 function setRestTimeInput(start, finish) {
@@ -188,8 +158,6 @@ function addDetailList(strHTML, notbutton = false, numberstr) {
   drawOvertimeSum();
 
   document.querySelector('#overtime-input').dispatchEvent(new Event('change'));
-
-  setWorkTime(notbutton);
 }
 
 function calcRowFee(row) {

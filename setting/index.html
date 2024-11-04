@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設定</title>
+  </head>
+  <body>
+    <li>
+      <a href="/paper/invoice.html">交通費請求書・勤務確認表</a>
+    </li>
+    <li>
+      <a href="/paper/timecard.html">就業時間確認表（タイムカード）</a>
+    </li>
+    <li>
+      <a href="/setting/index.html">設定</a>
+    </li>
+    <div>
+      <h4>基本情報</h4>
+      <div>
+        <label for="radio-fee-month">月給</label>
+        <input
+          type="radio"
+          name="radio-fee-type"
+          id="radio-fee-month"
+          value="0"
+        />
+        <label for="radio-fee-week">週給</label>
+        <input
+          type="radio"
+          name="radio-fee-type"
+          id="radio-fee-week"
+          value="1"
+        />
+        <br />
+        <label for="input-name">氏名</label>
+        <input type="text" name="name" id="input-name" />
+      </div>
+      <button id="bt-save">保存</button>
+    </div>
+    <hr />
+    <ul>
+      <li>
+        <a href="./template/register.html">テンプレート作成</a>
+      </li>
+      <!-- <li>
+        <a href="./template/register.html?e=1">テンプレート編集</a>
+      </li> -->
+    </ul>
+  </body>
+  <script>
+    const name = localStorage.name;
+    document.querySelector('#input-name').value = name ? name : '';
+
+    const fee = localStorage.feeType;
+    const id = fee == 1 ? 'radio-fee-week' : 'radio-fee-month';
+    document.querySelector('#' + id).checked = true;
+
+    document.querySelector('#bt-save').addEventListener('click', () => {
+      localStorage.name = document.querySelector('#input-name').value;
+      localStorage.feeType = document.querySelector(
+        '[name="radio-fee-type"]:checked'
+      ).value;
+    });
+  </script>
+</html>

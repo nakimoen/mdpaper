@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設定</title>
+  </head>
+  <body>
+    <h1>テンプレート登録・編集</h1>
+    <label for="input-template-id"><b>テンプレート名</b></label>
+    <input type="text" id="input-template-id" />
+    <hr />
+
+    <div>
+      <label for="input-vendor"><b>業者名</b></label>
+      <input type="text" name="vendor" id="input-vendor" />
+      <label for="input-site"><b>現場名</b></label>
+      <input type="text" name="site" id="input-site" />
+
+      <hr />
+      <div>
+        <div>
+          <b>移動手段</b>
+          <input type="checkbox" name="cb-way" id="cb-way-none" value="none" />
+          <label for="cb-way-none">なし</label>
+
+          <input
+            type="checkbox"
+            name="cb-way"
+            id="cb-way-train"
+            value="train"
+          />
+          <label for="cb-way-train">電車</label>
+
+          <input type="checkbox" name="cb-way" id="cb-way-bus" value="bus" />
+          <label for="cb-way-bus">バス</label>
+
+          <input type="checkbox" name="cb-way" id="cb-way-car" value="car" />
+          <label for="cb-way-car">車</label>
+
+          <input type="checkbox" name="cb-way" id="cb-way-bike" value="bike" />
+          <label for="cb-way-bike">バイク</label>
+        </div>
+        <div id="path-wrapper">
+          <div class="path-row">
+            <label for="input-path-from"><b>出発地</b></label>
+            <input type="text" id="input-path-from" />
+          </div>
+          <div>
+            <b>経由地の追加</b>
+            <button id="bt-add-via">＋</button>
+          </div>
+          <div id="via-wrapper"></div>
+          <div class="path-row">
+            <label for="input-path-to"><b>到着地</b></label>
+            <input type="text" id="input-path-to" />
+          </div>
+        </div>
+
+        <div>
+          <b>距離</b>
+          <input type="number" id="input-distance" min="1" />
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <div>
+      <label for="input-time-start"><b>就業時間</b></label>
+      <input type="time" name="time-start" id="input-time-start" />
+      ―――→
+      <input type="time" name="time-close" id="input-time-close" />
+
+      <div>
+        <b>休憩時間の追加</b>
+        <button id="bt-add-rest">＋</button>
+        <ul id="list-rest"></ul>
+      </div>
+    </div>
+    <hr />
+
+    <button id="bt-save">追加／保存</button>
+
+    <template id="template-via">
+      <b>経由地</b>
+      <input type="text" class="input-path-via" name="input-path-via" />
+      <button class="rm-via" onclick="removeVia(this)">×</button>
+    </template>
+
+    <template id="template-rest">
+      <div class="rest-line">
+        <input class="input-rest-time-start" />
+        <input class="input-rest-time-close" />
+        <button class="rm-rest">×</button>
+      </div>
+    </template>
+  </body>
+  <script src="./register.js"></script>
+</html>

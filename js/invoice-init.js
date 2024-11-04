@@ -1,4 +1,23 @@
 // 初期化
+
+// テンプレート
+(() => {
+  const template = localStorage.getItem('template');
+  if (template) {
+    const obj = JSON.parse(template);
+    const sele = document.querySelector('#sele-template');
+    Object.keys(obj).forEach((key) => {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.innerText = key;
+      sele.appendChild(opt);
+    });
+  }
+})();
+//給与
+const id = '#' + (localStorage.feeType == 1 ? 'fee-week' : 'fee-month');
+document.querySelector(id).classList.add('fee-mark');
+
 document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
 (() => {
   const today = new Date();
@@ -6,9 +25,7 @@ document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
   ind = ind - (ind >= 5 ? 5 : -2);
 
   const name = nameStorage();
-  const nameInput = document.querySelector('#name-input');
-  nameInput.value = name;
-  nameInput.dispatchEvent(new Event('change'));
+  document.querySelector('#name-text').innerText = name;
 
   // 記入日セット
   document.querySelector('#date-select').selectedIndex = ind;
@@ -71,14 +88,11 @@ function drawPostSum() {
     for (let i = 0; i < 7; i++) {
       const row = rows[i];
       const cell = row.querySelector('td:nth-child(3) td');
+      const sitecell = row.querySelector('td:nth-child(3) tr:nth-child(2) td');
       const text = cell.innerText;
       if (text && text.trim()) {
         const found = text.match(/.*((..)中止).*/);
         if (found) {
-          const sitecell = row.querySelector(
-            'td:nth-child(3) tr:nth-child(2) td'
-          );
-
           if (found[2] === '現着') {
             count += 0.5;
             cell.style.color = 'blue';
@@ -90,6 +104,9 @@ function drawPostSum() {
         } else {
           count++;
         }
+      } else {
+        cell.style.color = 'black';
+        sitecell.style.color = 'black';
       }
     }
     return count;

@@ -1,6 +1,39 @@
-document.querySelector('#name-input').addEventListener('change', function () {
-  document.querySelector('#name-text').innerText = this.value;
-});
+document
+  .querySelector('#sele-template')
+  .addEventListener('change', function () {
+    key = this.value;
+    const template = JSON.parse(localStorage.template);
+    const obj = template[key];
+
+    function setvalue(inputId, key) {
+      const input = document.querySelector('#' + inputId);
+      input.value = obj[key];
+      input.dispatchEvent(new Event('change'));
+    }
+    setvalue('vendor-input', 'vendor');
+    setvalue('site-input', 'site');
+    setvalue('start-time-input', 'start');
+    setvalue('finish-time-input', 'close');
+
+    // TODO: 手段チェックボックス化
+    obj.way.forEach((way) => {
+      document.querySelector('#way-' + way).checked = true;
+      document.querySelector('#way-' + way).dispatchEvent(new Event('change'));
+    });
+
+    setvalue('from-input', 'from');
+    setvalue('to-input', 'to');
+
+    let str = '';
+    obj.via.forEach((location) => {
+      str += ' ⇒ ' + location;
+    });
+    const to = document.querySelector('#to-input');
+    to.value = str + to.value;
+
+    setvalue('distance-input', 'distance');
+    document.querySelector('#add-detail-button').click();
+  });
 
 // 開始日を入力（インプト）
 document
@@ -75,7 +108,6 @@ document.querySelector('#date-select').addEventListener('change', function () {
   document.querySelector('#overtime-input').value =
     data && rowData.overtime ? rowData.overtime : 0;
 
-  document.querySelector('[name=way-radio]').checked = true;
   for (let way of document.querySelectorAll('[name=way-radio]')) {
     const label = way.closest('label');
     if (data && label.textContent.trim() == rowData.way) {
@@ -113,9 +145,10 @@ document.querySelector('#vendor-input').addEventListener('change', function () {
   setname(this, 0);
   drawPostSum();
 });
-document.querySelector('#site-input').addEventListener('change', function () {
+document.querySelector('#site-input').addEventListener('change', function (e) {
   setname(this, 1);
-  addSiteTemplate();
+  // if (!e.ignoreAdd)
+  if (e.bubbles) addSiteTemplate();
 });
 
 // 現場セレクト
@@ -123,8 +156,19 @@ document.querySelector('#site-select').addEventListener('change', function () {
   const siteinput = document.querySelector('#site-input');
   siteinput.value = this.value.replaceAll('<br>', '\n');
   siteinput.dispatchEvent(new Event('change'));
+  this.selectedIndex = 0;
 });
 
+document.querySelectorAll('#work-time-wrapper input').forEach((input) => {
+  input.addEventListener('change', () => {
+    const sinput = document.querySelector('#start-time-input');
+    const finput = document.querySelector('#finish-time-input');
+
+    const ind = Number(getCurrentRow().getAttribute('no'));
+    WORKTIME[ind].start = sinput.value;
+    WORKTIME[ind].finish = finput.value;
+  });
+});
 // 残業
 document
   .querySelector('#overtime-input')
@@ -135,7 +179,7 @@ document
   });
 
 // 移動手段
-document.querySelectorAll('#way-wrapper [type=radio]').forEach((elem) => {
+document.querySelectorAll('#way-wrapper [type=checkbox]').forEach((elem) => {
   elem.addEventListener('change', function () {
     const wayind = Number(this.value);
     const row = getCurrentRow();
@@ -147,7 +191,9 @@ document.querySelectorAll('#way-wrapper [type=radio]').forEach((elem) => {
       elem.classList.remove('way-selected');
     });
     // セット
-    if (wayind != -1) waydivs[wayind].classList.add('way-selected');
+
+    if (this.checked && wayind != -1)
+      waydivs[wayind].classList.add('way-selected');
   });
 });
 
