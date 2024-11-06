@@ -35,70 +35,51 @@ document
     document.querySelector('#add-detail-button').click();
   });
 
-// 開始日を入力（インプト）
-document
-  .querySelector('#start-date-input')
-  .addEventListener('change', function (e) {
-    reset();
-    const [year, month, day] = this.value.split('-');
-    loadALlRow();
+function loadWeek(datestr) {
+  reset();
+  const [year, month, day] = datestr.split('-');
+  loadALlRow();
 
-    const date = new Date(this.value);
+  const date = new Date(datestr);
 
-    if (date.getDay() !== 5) {
-      alert('金曜日を選択してください');
-      return;
-    }
-    // 各曜日の日付を表示
-    document.querySelectorAll('.date-cell').forEach((elem, ind) => {
-      const month = Number(date.getMonth() + 1);
-      const d = Number(date.getDate());
-      // row に ID（m-d）を振る
-      elem.closest('tr').setAttribute('id', 'r' + month + d);
-      elem.closest('tr').setAttribute('no', ind);
-      elem.querySelector('.month').innerHTML = month;
-      elem.querySelector('.day').innerHTML = d;
-      date.setDate(date.getDate() + 1);
-    });
-
-    // 入力する日付リストを生成
-    const select = document.querySelector('#date-select');
-    select.innerHTML = '';
-    const start = new Date(this.value);
-    start.setDate(start.getDate());
-    for (i = 0; i < 7; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      const opt = document.createElement('option');
-      const mm = date.getMonth() + 1;
-      opt.text =
-        mm +
-        '/' +
-        date.getDate() +
-        `(${['金', '土', '日', '月', '火', '水', '木'][i]})`;
-      opt.value = i + 1;
-
-      select.appendChild(opt);
-    }
-    document.querySelector('#date-select').dispatchEvent(new Event('change'));
-
-    const today = new Date();
-    today.getDate();
-
-    drawPostSum();
-    drawOvertimeSum();
+  if (date.getDay() !== 5) {
+    alert('金曜日を選択してください');
+    return;
+  }
+  // 各曜日の日付を表示
+  document.querySelectorAll('.date-cell').forEach((elem, ind) => {
+    const month = new String(date.getMonth() + 1).padStart(2, 0);
+    const d = new String(date.getDate()).padStart(2, 0);
+    // row に ID（m-d）を振る
+    elem.closest('tr').setAttribute('id', 'r' + month + d);
+    elem.closest('tr').setAttribute('no', ind);
+    elem.querySelector('.month').innerHTML = Number(month);
+    elem.querySelector('.day').innerHTML = Number(d);
+    date.setDate(date.getDate() + 1);
   });
 
-document.querySelector('#date-select').addEventListener('change', function () {
-  const md = this.selectedOptions[0].text.slice(0, -3);
-  ROW_ID = 'r' + md.replaceAll('/', '');
+  drawPostSum();
+  drawOvertimeSum();
+}
+document.querySelector('#date-input').addEventListener('change', function () {
+  const date = getStartFriday(this.value);
 
-  const startDateStr = document
-    .querySelector('#start-date-input')
-    .value.replaceAll('-', '');
+  const datestr = formatDate(date, '-');
+  // paper
+  loadWeek(datestr);
+  // input row
+  const d = new Date(this.value);
+  const diff = d.getTime() - date.getTime();
+  setDate(datestr, diff / (1000 * 60 * 60 * 24));
+});
+function setDate(startdatestr, dayindex) {
+  const splited = startdatestr.split('-');
+  const startDateStr = splited.join('');
+
+  ROW_ID = 'r' + splited.splice(1, 2).join('');
 
   const data = localStorage.getItem(startDateStr);
-  const ind = this.selectedIndex;
+  const ind = dayindex;
   const rowData = data ? JSON.parse(data)[ind] : null;
   //TODO: validation
   document.querySelector('#vendor-input').value =
@@ -119,7 +100,7 @@ document.querySelector('#date-select').addEventListener('change', function () {
   //
   // 各経路情報の読み込み
   //
-  const rowdetails = DETAILS[this.selectedIndex];
+  const rowdetails = DETAILS[dayindex];
   // reset list
   resetDetailOL();
   rowdetails.forEach((detail, ind) => {
@@ -139,8 +120,7 @@ document.querySelector('#date-select').addEventListener('change', function () {
 
   drawPostSum();
   drawOvertimeSum();
-});
-
+}
 document.querySelector('#vendor-input').addEventListener('change', function () {
   setname(this, 0);
   drawPostSum();
@@ -149,14 +129,6 @@ document.querySelector('#site-input').addEventListener('change', function (e) {
   setname(this, 1);
   // if (!e.ignoreAdd)
   if (e.bubbles) addSiteTemplate();
-});
-
-// 現場セレクト
-document.querySelector('#site-select').addEventListener('change', function () {
-  const siteinput = document.querySelector('#site-input');
-  siteinput.value = this.value.replaceAll('<br>', '\n');
-  siteinput.dispatchEvent(new Event('change'));
-  this.selectedIndex = 0;
 });
 
 document.querySelectorAll('#work-time-wrapper input').forEach((input) => {

@@ -1,5 +1,21 @@
 // 初期化
 
+//日付
+(() => {
+  const date = new Date();
+  // const day = date.getDay();
+  // if (day !== 5) {
+  //   date.setDate(date.getDate() - (day === 6 ? 1 : day + 2));
+  // }
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1 + '';
+  const d = date.getDate() + '';
+  const input = document.querySelector('#date-input');
+  input.value = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+
+  input.dispatchEvent(new Event('change'));
+})();
+
 // テンプレート
 (() => {
   const template = localStorage.getItem('template');
@@ -18,7 +34,7 @@
 const id = '#' + (localStorage.feeType == 1 ? 'fee-week' : 'fee-month');
 document.querySelector(id).classList.add('fee-mark');
 
-document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
+// document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
 (() => {
   const today = new Date();
   let ind = today.getDay();
@@ -28,7 +44,7 @@ document.querySelector('#start-date-input').dispatchEvent(new Event('change'));
   document.querySelector('#name-text').innerText = name;
 
   // 記入日セット
-  document.querySelector('#date-select').selectedIndex = ind;
+  // document.querySelector('#date-select').selectedIndex = ind;
 
   // 色付け
   document
@@ -75,8 +91,6 @@ function reset() {
   clearDetails();
   clearWorkRestTime();
 }
-
-document.querySelector('#date-select').dispatchEvent(new Event('change'));
 
 //================ポスト数
 function drawPostSum() {
@@ -151,7 +165,7 @@ function drawSumOfFee() {
 //================書き出し
 function output() {
   const startDateStr = document
-    .querySelector('#start-date-input')
+    .querySelector('#date-input')
     .value.replaceAll('-', '');
   const data = {};
   Object.keys(localStorage).filter((key) => {
@@ -209,9 +223,10 @@ function loadALlRow() {
   }
 }
 function loadRow(rowInd) {
-  const startDateStr = document
-    .querySelector('#start-date-input')
-    .value.replaceAll('-', '');
+  const startDateStr = formatDate(
+    getStartFriday(document.querySelector('#date-input').value)
+  );
+  // .value.replaceAll('-', '');
 
   const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
   let data = localStorage.getItem(startDateStr);
@@ -262,20 +277,3 @@ function loadRow(rowInd) {
     RESTTIME[rowInd] = data[rowInd].resttime;
   }
 }
-
-//
-// テンプレート呼び出し
-//
-(() => {
-  const site = localStorage.getItem('siteList');
-  if (site) {
-    const list = JSON.parse(site);
-    const sele = document.querySelector('#site-select');
-    list.forEach((item) => {
-      const opt = document.createElement('option');
-      opt.value = item;
-      opt.innerText = item;
-      sele.appendChild(opt);
-    });
-  }
-})();

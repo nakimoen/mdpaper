@@ -1,6 +1,6 @@
 function save() {
   const startDayKey = document
-    .querySelector('#start-date-input')
+    .querySelector('#date-input')
     .value.replaceAll('-', '');
 
   const data = (() => {

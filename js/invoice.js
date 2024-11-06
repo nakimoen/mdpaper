@@ -25,19 +25,6 @@ function clearWorkRestTime() {
 function getCurrentRow() {
   return document.querySelector('#' + ROW_ID);
 }
-//日付
-(() => {
-  const date = new Date();
-  const day = date.getDay();
-  if (day !== 5) {
-    date.setDate(date.getDate() - (day === 6 ? 1 : day + 2));
-  }
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1 + '';
-  const d = date.getDate() + '';
-  const input = document.querySelector('#start-date-input');
-  input.value = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-})();
 
 //業者・現場
 function setname(self, id) {
@@ -161,6 +148,7 @@ function addDetailList(strHTML, notbutton = false, numberstr) {
 }
 
 function calcRowFee(row) {
+  if (!row) return;
   let sumfee = 0;
   const pathDivs = row.querySelectorAll('.path-detail-cell > div > div');
   pathDivs.forEach((elem) => {

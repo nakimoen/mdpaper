@@ -4,3 +4,23 @@ function formatDate(date, sep = '') {
   const dd = ('00' + date.getDate()).slice(-2);
   return `${yyyy}${sep}${mm}${sep}${dd}`;
 }
+
+function getStartFriday(datestr) {
+  const date = new Date(datestr);
+  const day = date.getDay();
+  let diff;
+  let ind;
+  switch (day) {
+    case 5:
+    case 6:
+      ind = diff = day % 5;
+      break;
+
+    default:
+      ind = diff = day + 2;
+      break;
+  }
+  date.setDate(date.getDate() - diff);
+
+  return date;
+}

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../css/invoice-work-content.css" />
   </head>
   <body>
-    <div class="no-print">
+    <header class="no-print">
       <ul>
         <li>
           <a href="./invoice.html">交通費請求書・勤務確認表</a>
@@ -22,7 +22,7 @@
           <a href="./timecard.html">就業時間確認表（タイムカード）</a>
         </li>
         <li>
-          <a href="/setting/index.html">設定</a>
+          <a href="../setting/index.html">設定</a>
         </li>
       </ul>
       <div>
@@ -39,15 +39,12 @@
         <input type="file" id="file-input" />
       </div>
       <hr />
-
-      <label for="start-date-input">
-        データを参照する週の初日（金曜日）
-        <input type="date" name="first-date" id="start-date-input" />
-      </label>
+    </header>
+    <div class="no-print">
       <div>
-        <label for="date-select">
+        <label for="date-input">
           入力する日付
-          <select name="date-select" id="date-select"></select>
+          <input type="date" name="date-input" id="date-input" />
         </label>
       </div>
       <hr />
@@ -106,14 +103,8 @@
             <input type="text" id="vendor-input" />
             <br />
             <label for="site-input">現場名</label>
-            <!-- <input type="text" id="site-input" /> -->
             <textarea name="site-input" id="site-input"></textarea>
             <br />
-            <select id="site-select">
-              <option value="">---現場テンプレート---</option>
-            </select>
-            <br />
-            <button onclick="deleteSiteTemplate()">削除</button>
           </div>
           <div>
             <label for="overtime-input">残業時間</label>
@@ -142,8 +133,6 @@
                 />
               </label>
               <br />
-              <!-- <button>⇩</button>
-            <button onclick="">⇧</button> -->
               <label for="finish-time-input">
                 就業終了時刻
                 <input
@@ -290,7 +279,7 @@
         </div>
       </div>
     </div>
-    <section class="sheet">
+    <section class="sheet" style="display: none">
       <div id="row_1">交通費請求書・勤務確認表</div>
       <div id="row_2">
         <div class="col_1">
@@ -1110,11 +1099,13 @@
       </div>
     </section>
 
+    <script src="../js/util.js"></script>
+    <script src="../js/common.js"></script>
     <script src="../js/invoice.js"></script>
     <script src="../js/invoice-controll.js"></script>
     <script src="../js/event.js"></script>
+    <!-- invoice-init.js : event.jsよりも後に -->
     <script src="../js/invoice-init.js"></script>
     <script src="../js/storage.js"></script>
-    <script src="../js/common.js"></script>
   </body>
 </html>

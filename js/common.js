@@ -1,8 +1,6 @@
 function changeTitle() {
   const name = localStorage.getItem('name').replaceAll('　', '');
-  const date = document
-    .querySelector('#start-date-input')
-    .value.replaceAll('-', '');
+  const date = getStartFriday(document.querySelector('#date-input').value);
   const title = document.querySelector('title');
   const titleText = (() => {
     const arr = document.querySelector('title').innerText.split('_');
@@ -14,5 +12,9 @@ function changeTitle() {
 }
 
 window.onbeforeprint = () => {
+  document.querySelector('section.sheet').style.display = 'block';
   changeTitle();
+};
+window.onafterprint = () => {
+  document.querySelector('section.sheet').style.display = 'none';
 };

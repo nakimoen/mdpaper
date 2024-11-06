@@ -19,6 +19,12 @@ div#row_1 {
   display: flex;
   justify-content: center;
 }
+.vendor-cell > div {
+  align-content: center;
+}
+.site-cell > div {
+  align-content: center;
+}
 #input-wrapper > div {
   /* display: block; */
   border-right: 2px dotted black;
