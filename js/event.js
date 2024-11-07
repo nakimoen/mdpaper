@@ -70,13 +70,13 @@ document.querySelector('#date-input').addEventListener('change', function () {
   // input row
   const d = new Date(this.value);
   const diff = d.getTime() - date.getTime();
-  setDate(datestr, diff / (1000 * 60 * 60 * 24));
+  setDate(datestr, formatDate(d, '-'), diff / (1000 * 60 * 60 * 24));
 });
-function setDate(startdatestr, dayindex) {
+function setDate(startdatestr, datestr, dayindex) {
   const splited = startdatestr.split('-');
   const startDateStr = splited.join('');
 
-  ROW_ID = 'r' + splited.splice(1, 2).join('');
+  ROW_ID = 'r' + datestr.split('-').splice(1, 2).join('');
 
   const data = localStorage.getItem(startDateStr);
   const ind = dayindex;

@@ -1,7 +1,7 @@
 function save() {
-  const startDayKey = document
-    .querySelector('#date-input')
-    .value.replaceAll('-', '');
+  const startDayKey = formatDate(
+    getStartFriday(document.querySelector('#date-input').value)
+  );
 
   const data = (() => {
     const data = localStorage.getItem(startDayKey);

@@ -5,7 +5,7 @@ function formatDate(date, sep = '') {
   return `${yyyy}${sep}${mm}${sep}${dd}`;
 }
 
-function getStartFriday(datestr) {
+function getStartFriday(datestr, isString = false) {
   const date = new Date(datestr);
   const day = date.getDay();
   let diff;
@@ -22,5 +22,8 @@ function getStartFriday(datestr) {
   }
   date.setDate(date.getDate() - diff);
 
+  if (isString) {
+    return formatDate(date);
+  }
   return date;
 }
