@@ -29,7 +29,7 @@ document
       str += ' ⇒ ' + location;
     });
     const to = document.querySelector('#to-input');
-    to.value = str + to.value;
+    to.value = obj.via.join(' ⇒ ') + ' ⇒ ' + to.value;
 
     setvalue('distance-input', 'distance');
     document.querySelector('#add-detail-button').click();

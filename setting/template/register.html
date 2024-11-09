@@ -7,6 +7,17 @@
   </head>
   <body>
     <h1>テンプレート登録・編集</h1>
+
+    <ul>
+      <li><a href="../../paper/invoice.html">交通費請求書・勤務確認表</a></li>
+      <li>
+        <a href="../../paper/timecard.html">勤務時間確認表（タイムカード）</a>
+      </li>
+    </ul>
+    <select id="template-list-sele">
+      <option value="0">====テンプレート選択====</option>
+    </select>
+    <br />
     <label for="input-template-id"><b>テンプレート名</b></label>
     <input type="text" id="input-template-id" />
     <hr />
@@ -42,6 +53,7 @@
           <label for="cb-way-bike">バイク</label>
         </div>
         <div id="path-wrapper">
+          <small>※往復経路のみテンプレート対応しています。</small>
           <div class="path-row">
             <label for="input-path-from"><b>出発地</b></label>
             <input type="text" id="input-path-from" />
@@ -71,11 +83,11 @@
       ―――→
       <input type="time" name="time-close" id="input-time-close" />
 
-      <div>
+      <!-- <div>
         <b>休憩時間の追加</b>
         <button id="bt-add-rest">＋</button>
         <ul id="list-rest"></ul>
-      </div>
+      </div> -->
     </div>
     <hr />
 
