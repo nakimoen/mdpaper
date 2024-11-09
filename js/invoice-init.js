@@ -59,6 +59,20 @@ document.querySelector(id).classList.add('fee-mark');
   drawOvertimeSum();
   // 経費合計
   drawSumOfFee();
+
+  // 就業時間
+  const srartfridaystr = getStartFriday(today, true);
+  const data = JSON.parse(localStorage.getItem(srartfridaystr));
+  // const ind = (() => {
+  //   const day = today.getDay();
+  //   if (day / 5 >= 1) {
+  //     return day % 5;
+  //   }
+  //   return (day % 5) + 2;
+  // })();
+  document.querySelector('#start-time-input').value = data[ind].worktime.start;
+  document.querySelector('#finish-time-input').value =
+    data[ind].worktime.finish;
 })();
 
 function reset() {

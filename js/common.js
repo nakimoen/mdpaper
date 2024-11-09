@@ -1,6 +1,9 @@
 function changeTitle() {
   const name = localStorage.getItem('name').replaceAll('　', '');
-  const date = getStartFriday(document.querySelector('#date-input').value);
+  const date = getStartFriday(
+    document.querySelector('#date-input').value,
+    true
+  );
   const title = document.querySelector('title');
   const titleText = (() => {
     const arr = document.querySelector('title').innerText.split('_');
