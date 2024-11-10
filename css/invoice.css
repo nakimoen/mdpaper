@@ -6,6 +6,9 @@
 .d-flex {
   display: flex;
 }
+.d-flex > div {
+  width: 50%;
+}
 .m-r2 {
   margin-right: 2rem;
 }
@@ -54,7 +57,6 @@ header details {
 }
 
 div#input-container > div {
-  width: 50%;
   min-height: 100px;
 }
 #input-container > div input[type='text'],
