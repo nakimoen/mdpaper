@@ -42,15 +42,24 @@
       <hr />
     </header>
     <div id="container" class="no-print">
-      <div>
-        <label for="date-input">
-          入力する日付
+      <div class="d-flex">
+        <div class="m-r2">
+          <label for="date-input"> 入力する日付 </label>
+          <br />
           <input type="date" name="date-input" id="date-input" />
-        </label>
-        <br />
-        <select id="sele-template">
-          <option value="">===テンプレート====</option>
-        </select>
+          <br />
+          <select id="sele-template">
+            <option value="">===テンプレート====</option>
+          </select>
+        </div>
+        <div>
+          <label for="vendor-input">業者名</label>
+          <input type="text" id="vendor-input" />
+          <br />
+          <label for="site-input">現場名</label>
+          <textarea name="site-input" id="site-input" rows="4"></textarea>
+          <br />
+        </div>
       </div>
       <hr />
       <div class="border-rounded">
@@ -101,18 +110,9 @@
           </button>
         </div>
       </div>
-      <div id="input-container" class="no-print">
+      <hr />
+      <div id="input-container" class="d-flex border-rounded">
         <div>
-          <div>
-            <label for="vendor-input">業者名</label>
-            <input type="text" id="vendor-input" />
-            <br />
-            <label for="site-input">現場名</label>
-            <textarea name="site-input" id="site-input" rows="4"></textarea>
-            <br />
-          </div>
-
-          <hr />
           <div id="for-timecard-wrapper">
             <details open>
               <summary><b>勤務時間</b></summary>

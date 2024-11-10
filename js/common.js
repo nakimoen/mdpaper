@@ -1,3 +1,4 @@
+window.OrginTitle = document.querySelector('title').innerText;
 function changeTitle() {
   const name = localStorage.getItem('name').replaceAll('　', '');
   const date = getStartFriday(
@@ -15,9 +16,14 @@ function changeTitle() {
 }
 
 window.onbeforeprint = () => {
-  document.querySelector('section.sheet').style.display = 'block';
+  const sheet = document.querySelector('section.sheet');
+  sheet.style.display = 'block';
   changeTitle();
 };
 window.onafterprint = () => {
-  document.querySelector('section.sheet').style.display = 'none';
+  const sheet = document.querySelector('section.sheet');
+  if (sheet.dataset['toggle'] != 'on') {
+    sheet.style.display = 'none';
+  }
+  document.querySelector('title').innerText = window.OrginTitle;
 };

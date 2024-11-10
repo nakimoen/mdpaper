@@ -3,6 +3,12 @@
     background-color: rgba(116, 238, 137, 0.291);
   }
 }
+.d-flex {
+  display: flex;
+}
+.m-r2 {
+  margin-right: 2rem;
+}
 body {
   margin: 0;
 }
@@ -47,15 +53,10 @@ header details {
   background-color: rgba(127, 255, 212, 0.6);
 }
 
-div#input-container {
-  display: flex;
-}
-
 div#input-container > div {
   width: 50%;
   min-height: 100px;
 }
-
 #input-container > div input[type='text'],
 #input-container > div input[type='number'] {
   max-width: 70%;
