@@ -3,11 +3,37 @@
     background-color: rgba(116, 238, 137, 0.291);
   }
 }
-
+body {
+  margin: 0;
+}
+header {
+  position: sticky;
+  top: 0;
+  background-color: rgb(235, 252, 255);
+}
+header > ul {
+  display: flex;
+  margin: 0;
+  list-style: none;
+}
+header > ul li:not(:last-child)::after {
+  content: '｜';
+}
+header details {
+  display: inline;
+}
+#container {
+  padding: 1rem;
+}
 .font-big {
   font-size: 12pt !important;
 }
-
+.add-button {
+  width: 5rem;
+}
+.text-right {
+  text-align: right;
+}
 .template-button {
   color: gray;
   border-radius: 20px;
@@ -35,6 +61,9 @@ div#input-container > div {
   max-width: 70%;
 }
 
+#car-detali-form-wrapper * {
+  width: 100%;
+}
 /**===========================**/
 
 div#row_1 {

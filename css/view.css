@@ -5,6 +5,11 @@ button {
   margin: 0.5rem;
 }
 
+.add-button {
+  background-color: rgb(255, 214, 245);
+  border-color: rgb(255, 122, 188);
+  font-weight: bold;
+}
 input {
   margin: 0.3rem;
 }

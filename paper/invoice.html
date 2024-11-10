@@ -16,26 +16,32 @@
     <header class="no-print">
       <ul>
         <li>
-          <a href="./invoice.html">交通費請求書・勤務確認表</a>
+          <a href="./invoice.html">交通費</a>
         </li>
         <li>
-          <a href="./timecard.html">就業時間確認表（タイムカード）</a>
+          <a href="./timecard.html">タイムカード</a>
         </li>
         <li>
           <a href="../setting/index.html">設定</a>
         </li>
       </ul>
       <div>
-        <button onclick="reset()">リセット</button>
-        <button class="action-button" onclick="save()">データ保存</button>
         <button onclick="print()">印刷</button>
-        <hr />
-        <button onclick="output()">書き出し</button>
-        <input type="file" id="file-input" />
+        <button onclick="toggleSheet()">書類表示/非表示</button>
+        <button class="action-button" onclick="save()">データ保存</button>
+        <details>
+          <summary>その他</summary>
+          <button onclick="output()">エクスポート</button>
+          <br />
+          <label for="file-input">インポート</label>
+          <input type="file" id="file-input" />
+          <!-- <button onclick="reset()">リセット</button> -->
+        </details>
+        <br />
       </div>
       <hr />
     </header>
-    <div class="no-print">
+    <div id="container" class="no-print">
       <div>
         <label for="date-input">
           入力する日付
@@ -48,7 +54,7 @@
       </div>
       <hr />
       <div class="border-rounded">
-        休憩時間
+        <b>休憩時間</b>
         <div>
           <button
             class="template-button"
@@ -70,36 +76,29 @@
           </button>
         </div>
         <div>
-          <label for="rest-start-input">
-            開始時刻
-            <input
-              type="time"
-              name="rest-start"
-              id="rest-start-input"
-              value="10:00"
-              step="900"
-            />
-          </label>
-          <br />
-          <label for="rest-finish-input">
-            終了時刻
-            <input
-              type="time"
-              name="rest-finish"
-              id="rest-finish-input"
-              value="10:30"
-              step="900"
-            />
-          </label>
+          <input
+            type="time"
+            name="rest-start"
+            id="rest-start-input"
+            value="10:00"
+            step="900"
+          />～
+          <input
+            type="time"
+            name="rest-finish"
+            id="rest-finish-input"
+            value="10:30"
+            step="900"
+          />
         </div>
-        <hr />
-        <button id="add-rest-time-button" onclick="addRestTime()">追加</button>
-
-        <div>
-          <div id="rest-list">
-            <b>休憩詳細</b>
-            <ol></ol>
-          </div>
+        <div class="text-right">
+          <button
+            id="add-rest-time-button"
+            class="add-button"
+            onclick="addRestTime()"
+          >
+            追加
+          </button>
         </div>
       </div>
       <div id="input-container" class="no-print">
@@ -112,26 +111,14 @@
             <textarea name="site-input" id="site-input" rows="4"></textarea>
             <br />
           </div>
-          <div>
-            <label for="overtime-input">残業時間</label>
-            <input
-              type="number"
-              name="overtime-input"
-              id="overtime-input"
-              min="0"
-              step="0.25"
-              value="0"
-            />h
-            <br />
-            <small>0.25=15分, 0.5=30分, 0.75=45分</small>
-          </div>
+
           <hr />
           <div id="for-timecard-wrapper">
-            <b>勤務確認表用記入欄</b>
-            <div></div>
-            <div id="work-time-wrapper">
-              <label for="start-time-input">
-                就業開始時刻
+            <details open>
+              <summary><b>勤務時間</b></summary>
+              <div id="work-time-wrapper">
+                就業時間
+                <br />
                 <input
                   type="time"
                   name="start-time"
@@ -139,10 +126,9 @@
                   value="08:00"
                   step="900"
                 />
-              </label>
-              <br />
-              <label for="finish-time-input">
-                就業終了時刻
+                <br />
+                &nbsp;&nbsp; ⇩
+                <br />
                 <input
                   type="time"
                   name="finish-time"
@@ -150,9 +136,22 @@
                   value="17:00"
                   step="900"
                 />
-              </label>
-            </div>
-            <br />
+              </div>
+              <br />
+              <div>
+                <label for="overtime-input">残業時間</label>
+                <input
+                  type="number"
+                  name="overtime-input"
+                  id="overtime-input"
+                  min="0"
+                  step="0.25"
+                  value="0"
+                />h
+                <br />
+                <small>0.25=15分, 0.5=30分, 0.75=45分</small>
+              </div>
+            </details>
           </div>
           <hr />
           <div id="way-wrapper">
@@ -160,15 +159,15 @@
             <br />
 
             <!-- <label for="way-train">
-              <input
-                type="checkbox"
-                name="way-radio"
-                value="-1"
-                id="way-none"
-                checked
-              />
-              なし
-            </label> -->
+                <input
+                  type="checkbox"
+                  name="way-radio"
+                  value="-1"
+                  id="way-none"
+                  checked
+                />
+                なし
+              </label> -->
             <label for="way-train">
               <input
                 type="checkbox"
@@ -250,8 +249,8 @@
                   /><span>km</span>
                 </label>
               </div>
-              <div>
-                <button id="add-detail-button">追加</button>
+              <div class="text-right">
+                <button id="add-detail-button" class="add-button">追加</button>
               </div>
             </div>
             <div id="others-wrapper">
@@ -270,11 +269,17 @@
                   min="1"
                 />円
               </label>
-              <div><button id="add-others-button">追加</button></div>
+              <div class="text-right">
+                <button id="add-others-button" class="add-button">追加</button>
+              </div>
             </div>
           </div>
         </div>
         <div id="work-content-wrapper">
+          <div id="rest-list">
+            <b>休憩詳細</b>
+            <ol></ol>
+          </div>
           <div id="added-details">
             <b>移動詳細</b>
             <ol></ol>
@@ -282,7 +287,6 @@
         </div>
       </div>
       <hr />
-      <button onclick="toggleSheet()">書類表示/非表示</button>
     </div>
     <section class="sheet" style="display: none">
       <div id="row_1">交通費請求書・勤務確認表</div>
