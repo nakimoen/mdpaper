@@ -1,6 +1,9 @@
 document
   .querySelector('#sele-template')
   .addEventListener('change', function () {
+    if (!this.value) {
+      return;
+    }
     key = this.value;
     const template = JSON.parse(localStorage.template);
     const obj = template[key];
@@ -29,10 +32,12 @@ document
       str += ' ⇒ ' + location;
     });
     const to = document.querySelector('#to-input');
-    to.value = obj.via.join(' ⇒ ') + ' ⇒ ' + to.value;
+    to.value = (obj.via.length ? obj.via.join(' ⇒ ') : '') + ' ⇒ ' + to.value;
 
     setvalue('distance-input', 'distance');
     document.querySelector('#add-detail-button').click();
+
+    this.selectedIndex = 0;
   });
 
 function loadWeek(datestr) {
@@ -208,3 +213,10 @@ document
     addTextToDetailsDiv(str);
     addDetailList(str);
   });
+
+function toggleSheet() {
+  const sheet = document.querySelector('.sheet');
+  const toggle = sheet.dataset['toggle'] == 'on';
+  sheet.dataset['toggle'] = toggle ? 'off' : 'on';
+  sheet.style.display = toggle ? 'none' : 'block';
+}

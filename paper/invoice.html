@@ -29,11 +29,6 @@
         <button onclick="reset()">リセット</button>
         <button class="action-button" onclick="save()">データ保存</button>
         <button onclick="print()">印刷</button>
-        <br />
-        <select id="sele-template">
-          <option value="">===テンプレート====</option>
-        </select>
-
         <hr />
         <button onclick="output()">書き出し</button>
         <input type="file" id="file-input" />
@@ -46,6 +41,10 @@
           入力する日付
           <input type="date" name="date-input" id="date-input" />
         </label>
+        <br />
+        <select id="sele-template">
+          <option value="">===テンプレート====</option>
+        </select>
       </div>
       <hr />
       <div class="border-rounded">
@@ -95,6 +94,13 @@
         </div>
         <hr />
         <button id="add-rest-time-button" onclick="addRestTime()">追加</button>
+
+        <div>
+          <div id="rest-list">
+            <b>休憩詳細</b>
+            <ol></ol>
+          </div>
+        </div>
       </div>
       <div id="input-container" class="no-print">
         <div>
@@ -103,7 +109,7 @@
             <input type="text" id="vendor-input" />
             <br />
             <label for="site-input">現場名</label>
-            <textarea name="site-input" id="site-input"></textarea>
+            <textarea name="site-input" id="site-input" rows="4"></textarea>
             <br />
           </div>
           <div>
@@ -116,6 +122,8 @@
               step="0.25"
               value="0"
             />h
+            <br />
+            <small>0.25=15分, 0.5=30分, 0.75=45分</small>
           </div>
           <hr />
           <div id="for-timecard-wrapper">
@@ -267,19 +275,16 @@
           </div>
         </div>
         <div id="work-content-wrapper">
-          <div id="rest-list">
-            <b>休憩詳細</b>
-            <ol></ol>
-          </div>
-          <hr />
           <div id="added-details">
             <b>移動詳細</b>
             <ol></ol>
           </div>
         </div>
       </div>
+      <hr />
+      <button onclick="toggleSheet()">書類表示/非表示</button>
     </div>
-    <section class="sheet" style="">
+    <section class="sheet" style="display: none">
       <div id="row_1">交通費請求書・勤務確認表</div>
       <div id="row_2">
         <div class="col_1">
