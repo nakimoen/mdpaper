@@ -108,7 +108,7 @@ document
           // TODO: 読み込み時
           while (
             cell.scrollWidth > cellContainer.offsetWidth ||
-            cell.scrollHeight >= cellContainer.scrollHeight
+            cell.scrollHeight > cellContainer.scrollHeight
           ) {
             const newline = cellContainer;
             const fontSize = parseFloat(
