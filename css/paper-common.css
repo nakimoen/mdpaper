@@ -2,6 +2,16 @@
 @page {
   margin: 0; /* ヘッダー・フッダーを無効化 */
 }
+@media screen {
+  html {
+    font-size: medium;
+  }
+}
+@media screen and (max-width: 770px) {
+  html {
+    font-size: 1.5rem;
+  }
+}
 
 /* 要素の初期化 */
 .sheet *:not(small, b) {
