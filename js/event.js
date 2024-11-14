@@ -32,7 +32,7 @@ document
     // str += ' ⇒ ' + location;
     // });
     const to = document.querySelector('#to-input');
-    to.value = (obj.via.length ? obj.via.join(' ⇒ ') : '') + ' ⇒ ' + to.value;
+    to.value = (obj.via.length ? obj.via.join(' ⇒ ') : '') + to.value;
 
     setvalue('distance-input', 'distance');
     document.querySelector('#add-detail-button').click();
