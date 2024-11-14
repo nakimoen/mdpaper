@@ -27,10 +27,10 @@ document
     setvalue('from-input', 'from');
     setvalue('to-input', 'to');
 
-    let str = '';
-    obj.via.forEach((location) => {
-      str += ' ⇒ ' + location;
-    });
+    // let str = '';
+    // obj.via.forEach((location) => {
+    // str += ' ⇒ ' + location;
+    // });
     const to = document.querySelector('#to-input');
     to.value = (obj.via.length ? obj.via.join(' ⇒ ') : '') + ' ⇒ ' + to.value;
 

@@ -2,6 +2,18 @@
   .active {
     background-color: rgba(116, 238, 137, 0.291);
   }
+
+  #menu-buttons {
+    margin-top: 0.5rem;
+  }
+  #menu-buttons button {
+    height: 2rem;
+    min-width: 4rem;
+  }
+
+  :not(.sheet *) {
+    font-size: 1.2rem;
+  }
 }
 .d-flex {
   display: flex;
@@ -32,13 +44,6 @@ header details {
   display: inline;
 }
 @media screen and (max-width: 770px) {
-  #menu-buttons {
-    margin-top: 0.5rem;
-  }
-  #menu-buttons button {
-    height: 2rem;
-    min-width: 4rem;
-  }
 }
 
 #container {
