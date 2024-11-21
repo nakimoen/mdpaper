@@ -118,24 +118,26 @@ function drawPostSum() {
       const cell = row.querySelector('td:nth-child(3) td');
       const sitecell = row.querySelector('td:nth-child(3) tr:nth-child(2) td');
       const text = cell.innerText;
+      let color = 'black';
       if (text && text.trim()) {
-        const found = text.match(/.*((..)中止).*/);
-        if (found) {
+        const half = text.match(/【半休】.*/);
+        const cancel = text.match(/.*【((..)中止)】.*/);
+        if (half) {
+          count += 0.5;
+          color = 'blue';
+        } else if (cancel) {
           if (found[2] === '現着') {
             count += 0.5;
-            cell.style.color = 'blue';
-            sitecell.style.color = 'blue';
+            color = 'blue';
           } else {
-            cell.style.color = 'red';
-            sitecell.style.color = 'red';
+            color = 'red';
           }
         } else {
           count++;
         }
-      } else {
-        cell.style.color = 'black';
-        sitecell.style.color = 'black';
       }
+      cell.style.color = color;
+      sitecell.style.color = color;
     }
     return count;
   })();
