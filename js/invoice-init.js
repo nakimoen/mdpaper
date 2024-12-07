@@ -120,7 +120,7 @@ function drawPostSum() {
       const text = cell.innerText;
       let color = 'black';
       if (text && text.trim()) {
-        const half = text.match(/【半日】.*/);
+        const half = text.match(/【((半日)|(巡回))】.*/);
         const cancel = text.match(/.*【((..)中止)】.*/);
         if (half) {
           count += 0.5;
