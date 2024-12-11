@@ -22,12 +22,14 @@
   if (template) {
     const obj = JSON.parse(template);
     const sele = document.querySelector('#sele-template');
-    Object.keys(obj).forEach((key) => {
-      const opt = document.createElement('option');
-      opt.value = key;
-      opt.innerText = key;
-      sele.appendChild(opt);
-    });
+    Object.keys(obj)
+      .sort()
+      .forEach((key) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.innerText = key;
+        sele.appendChild(opt);
+      });
   }
 })();
 //給与
