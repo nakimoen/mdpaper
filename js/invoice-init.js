@@ -72,9 +72,12 @@ document.querySelector(id).classList.add('fee-mark');
   //   }
   //   return (day % 5) + 2;
   // })();
-  document.querySelector('#start-time-input').value = data[ind].worktime.start;
-  document.querySelector('#finish-time-input').value =
-    data[ind].worktime.finish;
+  if (data && data[ind]) {
+    document.querySelector('#start-time-input').value =
+      data[ind].worktime.start;
+    document.querySelector('#finish-time-input').value =
+      data[ind].worktime.finish;
+  }
 })();
 
 function reset() {
@@ -128,7 +131,7 @@ function drawPostSum() {
           count += 0.5;
           color = 'blue';
         } else if (cancel) {
-          if (found[2] === '現着') {
+          if (cancel[2] === '現着') {
             count += 0.5;
             color = 'blue';
           } else {
