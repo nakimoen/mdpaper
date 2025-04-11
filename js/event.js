@@ -47,6 +47,8 @@ function loadWeek(datestr) {
 
   const date = new Date(datestr);
 
+  setThisMonthFee(date.getFullYear(), date.getMonth() + 1);
+
   if (date.getDay() !== 5) {
     alert('金曜日を選択してください');
     return;

@@ -78,8 +78,16 @@ document.querySelector(id).classList.add('fee-mark');
     document.querySelector('#finish-time-input').value =
       data[ind].worktime.finish;
   }
+
+  setThisMonthFee(today.getFullYear(), today.getMonth() + 1);
 })();
 
+function setThisMonthFee(y, m) {
+  document.querySelector('#thisMonthFee').innerText = getMonthData(
+    y,
+    m
+  ).toLocaleString();
+}
 function reset() {
   const rows = document.querySelectorAll('#row_3 > table > tbody > tr');
   rows.forEach((row) => {

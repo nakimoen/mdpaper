@@ -21,63 +21,58 @@ function drawWorkSF() {
   document.querySelectorAll('.start-cell').forEach((cell, i) => {
     let start,
       finish = null;
-    if (DATA[i].worktime.start) {
-      start = DATA[i].worktime.start;
-      cell.innerText = start;
+    if (!DATA || !DATA[i].worktime.start) return;
+    start = DATA[i].worktime.start;
+    cell.innerText = start;
 
-      const rowData = DATA[i];
+    const rowData = DATA[i];
 
-      finish = rowData.worktime.finish;
-      document.querySelectorAll('.finish-cell')[i].innerText = finish;
+    finish = rowData.worktime.finish;
+    document.querySelectorAll('.finish-cell')[i].innerText = finish;
 
-      let resttotal = 0;
-      rowData.resttime.forEach((rest) => {
-        const [h, m] = rest.start.split(':');
-        const [fh, fm] = rest.finish.split(':');
-        resttotal += Number(fh) + Number(fm) / 60 - (Number(h) + m / 60);
-      });
-      document
-        .querySelectorAll('.rest-cell')
-        [i].querySelector('span').innerText = resttotal;
+    let resttotal = 0;
+    rowData.resttime.forEach((rest) => {
+      const [h, m] = rest.start.split(':');
+      const [fh, fm] = rest.finish.split(':');
+      resttotal += Number(fh) + Number(fm) / 60 - (Number(h) + m / 60);
+    });
+    document.querySelectorAll('.rest-cell')[i].querySelector('span').innerText =
+      resttotal;
 
-      const [h, m] = start.split(':');
-      const [fh, fm] = finish.split(':');
-      document
-        .querySelectorAll('.work-cell')
-        [i].querySelector('span').innerText =
-        Number(fh) - Number(h) + (fm - m) / 60 - resttotal;
+    const [h, m] = start.split(':');
+    const [fh, fm] = finish.split(':');
+    document.querySelectorAll('.work-cell')[i].querySelector('span').innerText =
+      Number(fh) - Number(h) + (fm - m) / 60 - resttotal;
 
-      document
-        .querySelectorAll('.overtime-cell')
-        [i].querySelector('span').innerText = rowData.overtime;
+    document
+      .querySelectorAll('.overtime-cell')
+      [i].querySelector('span').innerText = rowData.overtime;
 
-      // 就業時間マーク
-      document.querySelectorAll('[data-label="' + start + '"]')[i].innerText =
-        'S';
-      document.querySelectorAll('[data-label="' + finish + '"]')[i].innerText =
-        'F';
+    // 就業時間マーク
+    document.querySelectorAll('[data-label="' + start + '"]')[i].innerText =
+      'S';
+    document.querySelectorAll('[data-label="' + finish + '"]')[i].innerText =
+      'F';
 
-      // 休憩時間マーク
-      rowData.resttime.forEach((rest) => {
-        // const [ns, minutes] = rest.start.split(':');
-        const startlabel = rest.start;
-        const [nfs, fminutes] = rest.finish.split(':');
-        const finishlabel = Number(nfs) + ':' + fminutes;
+    // 休憩時間マーク
+    rowData.resttime.forEach((rest) => {
+      // const [ns, minutes] = rest.start.split(':');
+      const startlabel = rest.start;
+      const [nfs, fminutes] = rest.finish.split(':');
+      const finishlabel = Number(nfs) + ':' + fminutes;
 
-        let label = startlabel;
-        const finishCond = finishlabel.replace(':', '') - 0;
-        while (label.replace(':', '') - 0 < finishCond) {
-          document.querySelectorAll('[data-label="' + label + '"]')[
-            i
-          ].innerText = '○';
-          let [h, m] = label.split(':');
-          m = ~~m + 15;
-          const hour = new String(~~h + Math.floor(m / 60)).padStart(2, 0);
-          const minutes = new String((m % 60) + '').padStart(2, 0);
-          label = hour + ':' + minutes;
-        }
-      });
-    }
+      let label = startlabel;
+      const finishCond = finishlabel.replace(':', '') - 0;
+      while (label.replace(':', '') - 0 < finishCond) {
+        document.querySelectorAll('[data-label="' + label + '"]')[i].innerText =
+          '○';
+        let [h, m] = label.split(':');
+        m = ~~m + 15;
+        const hour = new String(~~h + Math.floor(m / 60)).padStart(2, 0);
+        const minutes = new String((m % 60) + '').padStart(2, 0);
+        label = hour + ':' + minutes;
+      }
+    });
   });
 }
 
@@ -106,22 +101,23 @@ document
           //フォントサイズ自動調整
           // そもそも最初のサイズが小さいので、無限ループにすぐ入る
           // TODO: 読み込み時
-          while (
-            cell.scrollWidth > cellContainer.offsetWidth ||
-            cell.scrollHeight > cellContainer.scrollHeight
-          ) {
-            const newline = cellContainer;
-            const fontSize = parseFloat(
-              window.getComputedStyle(newline).fontSize
-            );
-            if (fontSize < 8.9) {
-              newline.style.textWrap = 'wrap';
-              newline.style.fontSize = 8;
-              break;
+          if (cellContainer)
+            while (
+              cell.scrollWidth > cellContainer.offsetWidth ||
+              cell.scrollHeight > cellContainer.scrollHeight
+            ) {
+              const newline = cellContainer;
+              const fontSize = parseFloat(
+                window.getComputedStyle(newline).fontSize
+              );
+              if (fontSize < 8.9) {
+                newline.style.textWrap = 'wrap';
+                newline.style.fontSize = 8;
+                break;
+              }
+              const newSize = fontSize - 1;
+              newline.style.fontSize = newSize + 'px';
             }
-            const newSize = fontSize - 1;
-            newline.style.fontSize = newSize + 'px';
-          }
         });
     }
 
