@@ -48,7 +48,18 @@
           <label for="date-input"> 入力する日付 </label>
           <br />
           <input type="date" name="date-input" id="date-input" />
-          <div id="thisMonthFee"></div>
+          <br />
+          <details>
+            <summary>金額詳細</summary>
+            <small>該当月の請求金額</small>
+            <div id="thisMonthFee"></div>
+            <small>残額</small>
+            <div id="remainFee"></div>
+            <small>出勤可能残日数</small>
+            <div id="remainDays"></div>
+            <small>残り残業可能時間</small>
+            <div id="remainOvertime"></div>
+          </ｄ>
           <br />
           <select id="sele-template">
             <option value="">===テンプレート====</option>
@@ -56,7 +67,7 @@
         </div>
         <div>
           <label for="vendor-input">業者名</label>
-          <input type="text" id="vendor-input" />
+          <textarea type="text" id="vendor-input" ></textarea>
           <br />
           <label for="site-input">現場名</label>
           <textarea name="site-input" id="site-input" rows="4"></textarea>

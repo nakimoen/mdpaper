@@ -78,6 +78,8 @@ document.querySelector('#date-input').addEventListener('change', function () {
   const d = new Date(this.value);
   const diff = d.getTime() - date.getTime();
   setDate(datestr, formatDate(d, '-'), diff / (1000 * 60 * 60 * 24));
+
+  setThisMonthFee(date.getFullYear(), date.getMonth() + 1);
 });
 function setDate(startdatestr, datestr, dayindex) {
   const splited = startdatestr.split('-');
@@ -128,6 +130,21 @@ function setDate(startdatestr, datestr, dayindex) {
   drawPostSum();
   drawOvertimeSum();
 }
+
+function ifexistquerySelector(identifier, func) {
+  if (document.querySelector(identifier)) {
+    func(identifier);
+  }
+}
+function setThisMonthFee(y, m) {
+  const [total, remainFee, remainDays, overtime] = getMonthData(y, m);
+  document.querySelector('#thisMonthFee').innerText = total.toLocaleString();
+  document.querySelector('#remainFee').innerText = remainFee.toLocaleString();
+  document.querySelector('#remainDays').innerText = remainDays.toLocaleString();
+  document.querySelector('#remainOvertime').innerText =
+    overtime.toLocaleString();
+}
+
 document.querySelector('#vendor-input').addEventListener('change', function () {
   setname(this, 0);
   drawPostSum();

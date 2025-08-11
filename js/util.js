@@ -32,6 +32,7 @@ function getMonthData(year, month) {
   year = '' + year;
   month = '' + month;
   let total = 0;
+  let count = 0;
 
   const [fyear, fmonth] = (() => {
     if (month == 1) {
@@ -56,6 +57,8 @@ function getMonthData(year, month) {
         const d = parseInt(key.substr(6, 2)) + i;
         const date = new Date(y, m, d);
         if (date.getFullYear() == year && date.getMonth() == month - 1) {
+          count++;
+
           const [price, overprice] = (() => {
             if (data[i].isHoliday) {
               return [40000, 6330];
@@ -69,5 +72,11 @@ function getMonthData(year, month) {
       }
     });
 
-  return total;
+  const remainFee = 800000 - total;
+  return [
+    total,
+    remainFee,
+    parseInt(remainFee / 30000),
+    Math.floor((remainFee * 10) / 23450) / 2,
+  ];
 }
